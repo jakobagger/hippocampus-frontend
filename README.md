@@ -1,4 +1,4 @@
-# Memorize (frontend)
+# www.MemoryGym.dk (frontend)
 
 ## Gruppekontrakt
 
