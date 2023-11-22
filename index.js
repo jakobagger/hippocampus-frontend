@@ -5,12 +5,14 @@ import {
   setActiveLink, renderHtml, loadHtml
 } from "./utils.js"
 import { initLogin } from "./pages/login/login.js"
+import { initSignup } from "./pages/signup/signup.js";
 
 window.addEventListener("load", async () => {
 
   const templateAbout = await loadHtml("./pages/about/about.html")
   const templateNotFound = await loadHtml("./pages/notFound/notFound.html")
   const templateLogin = await loadHtml("./pages/login/login.html")
+  const templateSignup = await loadHtml("./pages/signup/signup.html")
   
   const router = new Navigo("/", { hash: true });
   //Not especially nice, BUT MEANT to simplify things. Make the router global so it can be accessed from all js-files
@@ -38,7 +40,11 @@ window.addEventListener("load", async () => {
       "/login": () => {
         renderHtml(templateLogin, "content")
         initLogin()
-    },  
+    },
+      "/signup": () => {
+        renderHtml(templateSignup, "content")
+        initSignup()
+      },  
     })
     .notFound(() => {
       renderHtml(templateNotFound, "content")
