@@ -2,14 +2,16 @@ import { handleHttpErrors, sanitizeStringWithTableRows } from "../../utils.js";
 
 let URL = "http://localhost:8080/api/members"
 
-export async function initSignup() {
 
+export async function initSignup() {
+    
     document.querySelector("#btn-signup").addEventListener("click", signup)
 
 }
 
-async function signup() {
+async function signup(event) {
     event.preventDefault()
+    const responseStatus = document.getElementById("response")
 
     const form = document.querySelector("#form-signup")
 
@@ -34,12 +36,19 @@ async function signup() {
     };
 
     try {
-        const response = await fetch(URL, options).then(handleHttpErrors)
-        
-    } catch(e) {
-        document.querySelector("#error").innerText = e.message
+        const response = await fetch(URL, options).then(res => handleHttpErrors(res));
+        const jsonData = await response.json();
+        console.log("Received data:", jsonData);
+        responseStatus.innerText = JSON.stringify(jsonData);
+    } catch (e) {
+        console.error("Error occurred:", e);
+        if (e.fullResponse) {
+            // Display a custom message based on the error response
+            responseStatus.innerText = `Error: ${e.fullResponse.error}. Status: ${e.fullResponse.status}.`;
+        } else {
+            // Fallback error message
+            responseStatus.innerText = e.message;
+        }
     }
-
-
 
 }

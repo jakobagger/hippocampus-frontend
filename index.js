@@ -4,6 +4,7 @@ import "https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.0/purify.min.js"
 import {
   setActiveLink, renderHtml, loadHtml
 } from "./utils.js"
+
 import { initLogin } from "./pages/login/login.js"
 import { initSignup } from "./pages/signup/signup.js";
 
@@ -42,7 +43,7 @@ window.addEventListener("load", async () => {
         initLogin()
     },
       "/signup": () => {
-        renderHtml(templateSignup, "content")
+        renderHtml(templateSignup, "content");
         initSignup()
       },  
     })
