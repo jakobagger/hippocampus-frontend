@@ -28,6 +28,7 @@ async function login() {
     });
 
     if (response.ok) {
+        storeLoginDetails(response)
         const data = await response.json();
         loginResult.textContent = "Login successful";
     } else {
@@ -38,3 +39,17 @@ async function login() {
     loginError.textContent = "Error: " + err.message;
     }
 };
+
+function storeLoginDetails(response) {
+    localStorage.setItem("token", response.token);
+    localStorage.setItem("username", response.username);
+    localStorage.setItem("roles", response.roles);
+    
+    // TODO: add UI update (toggle) function
+
+    console.log("Login fisk");
+    console.log(response.token);
+    console.log(response.username);
+    console.log(response.roles);
+    console.log(localStorage.getItem("token"));
+}
