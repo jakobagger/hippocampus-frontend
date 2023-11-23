@@ -7,6 +7,7 @@ import {
 
 import { initLogin } from "./pages/login/login.js"
 import { initSignup } from "./pages/signup/signup.js";
+import { initQuiz } from "./pages/quiz/quiz.js";
 
 window.addEventListener("load", async () => {
 
@@ -14,6 +15,7 @@ window.addEventListener("load", async () => {
   const templateNotFound = await loadHtml("./pages/notFound/notFound.html")
   const templateLogin = await loadHtml("./pages/login/login.html")
   const templateSignup = await loadHtml("./pages/signup/signup.html")
+  const templateQuiz = await loadHtml("./pages/quiz/quiz.html")
   
   const router = new Navigo("/", { hash: true });
   //Not especially nice, BUT MEANT to simplify things. Make the router global so it can be accessed from all js-files
@@ -29,12 +31,10 @@ window.addEventListener("load", async () => {
     })
     .on({
       //For very simple "templates", you can just insert your HTML directly like below
-      "/": () => document.getElementById("content").innerHTML =
-        `<h2>Home</h2>
-      <p style='margin-top:2em'>
-      INSERT QUIZ HERE?
-      </p>
-     `,
+      "/": () => {
+        renderHtml(templateQuiz, "content")
+        initQuiz()
+      },
       "/about": () => {
         renderHtml(templateAbout, "content")
     },
