@@ -28,8 +28,8 @@ async function login() {
     });
 
     if (response.ok) {
-        storeLoginDetails(response)
         const data = await response.json();
+        storeLoginDetails(data);
         loginResult.textContent = "Login successful";
     } else {
         const errorData = await response.json();
