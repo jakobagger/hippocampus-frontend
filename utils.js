@@ -60,6 +60,7 @@ export function renderHtml(template, contentId) {
   export async function handleHttpErrors(res) {
     if (!res.ok) {
       const errorResponse = await res.json();
+      console.log("Error response from server:", errorResponse);
       const error = new Error(errorResponse.message)
       // @ts-ignore
       error.fullResponse = errorResponse
