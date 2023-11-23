@@ -11,6 +11,7 @@ window.addEventListener("load", async () => {
   const templateAbout = await loadHtml("./pages/about/about.html")
   const templateNotFound = await loadHtml("./pages/notFound/notFound.html")
   const templateLogin = await loadHtml("./pages/login/login.html")
+  const templateDefaultMatrix = await loadHtml("./pages/defaultMatrix/defaultMatrix.html")
   
   const router = new Navigo("/", { hash: true });
   //Not especially nice, BUT MEANT to simplify things. Make the router global so it can be accessed from all js-files
@@ -38,7 +39,11 @@ window.addEventListener("load", async () => {
       "/login": () => {
         renderHtml(templateLogin, "content")
         initLogin()
-    },  
+    },
+      "/defaultMatrix": () => {
+        renderHtml(templateDefaultMatrix, "content")
+        initDefaultMatrix()
+      }  
     })
     .notFound(() => {
       renderHtml(templateNotFound, "content")
