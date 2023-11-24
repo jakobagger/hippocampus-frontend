@@ -1,4 +1,4 @@
-import { API_URL } from "../../settings.js";
+let URL = "http://localhost:8080/api"
 
 export async function initLogin() {
     document.getElementById("login-form").addEventListener("submit", login);
@@ -19,7 +19,7 @@ async function login() {
     };
 
     try {
-    const response = await fetch(`${API_URL}/auth/login`, {
+    const response = await fetch(`${URL}/auth/login`, {
         method: "POST",
         headers: {
         "Content-Type": "application/json"
@@ -29,6 +29,7 @@ async function login() {
 
     if (response.ok) {
         const data = await response.json();
+        storeLoginDetails(data)
         loginResult.textContent = "Login successful";
     } else {
         const errorData = await response.json();
@@ -38,3 +39,10 @@ async function login() {
     loginError.textContent = "Error: " + err.message;
     }
 };
+
+function storeLoginDetails(res) {
+    localStorage.setItem("token", res.token)
+    localStorage.setItem("user", res.username)
+    localStorage.setItem("roles", res.roles)
+    //Update UI
+  }
