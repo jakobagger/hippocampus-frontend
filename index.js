@@ -18,13 +18,14 @@ window.addEventListener("load", async () => {
   const templateQuiz = await loadHtml("./pages/quiz/quiz.html")
   
   let  router
- if (window.location.hostname === 'localhost' || window.location.hostname ==="127.0.0.1") {
-    console.log('Running locally (using hash (/#):'+window.location.hostname);
-    router = new Navigo("/", { hash: true })
- } else {
-   console.log('Assume we are on Azure, make sure you have added the staticwebapp.config.json file')
-   router = new Navigo("/")
- }
+  if (window.location.hostname === 'localhost' || window.location.hostname ==="127.0.0.1") {
+     console.log('Running locally (using hash (/#):'+window.location.hostname);
+     router = new Navigo("/", { hash: true })
+  } else {
+    console.log('Assume we are on Azure, make sure you have added the staticwebapp.config.json file')
+    router = new Navigo("/")
+  }
+ 
   //Not especially nice, BUT MEANT to simplify things. Make the router global so it can be accessed from all js-files
   window.router = router
  
