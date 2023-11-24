@@ -29,7 +29,7 @@ async function login() {
 
     if (response.ok) {
         const data = await response.json();
-        storeLoginDetails(data)
+        storeLoginDetails(data);
         loginResult.textContent = "Login successful";
     } else {
         const errorData = await response.json();
@@ -40,9 +40,16 @@ async function login() {
     }
 };
 
-function storeLoginDetails(res) {
-    localStorage.setItem("token", res.token)
-    localStorage.setItem("user", res.username)
-    localStorage.setItem("roles", res.roles)
-    //Update UI
-  }
+function storeLoginDetails(response) {
+    localStorage.setItem("token", response.token);
+    localStorage.setItem("username", response.username);
+    localStorage.setItem("roles", response.roles);
+    
+    // TODO: add UI update (toggle) function
+
+    console.log("Login fisk");
+    console.log(response.token);
+    console.log(response.username);
+    console.log(response.roles);
+    console.log(localStorage.getItem("token"));
+}
