@@ -6,7 +6,7 @@ let correctGuesses = [];
 let incorrectGuesses = [];
 let isCardRevealed = false;
 let currentIndex = 0;
-let startTime = Date.now();
+let startTime;
 
 export async function initQuiz(){
 
@@ -24,7 +24,7 @@ export async function initQuiz(){
 
 async function fetchCardData() {
 
-    
+    startTime = Date.now();
     try {
         const response = await fetch(`${API_URL}/card`);
         if (!response.ok) {
@@ -59,7 +59,7 @@ function fetchRandomCardData() {
         console.log('No cards available to display');
 
     }
-            let endTime = Date.now();
+        let endTime = Date.now();
         let time = endTime-startTime;
         console.log(time/100)
         isCardRevealed = false;
