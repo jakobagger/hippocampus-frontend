@@ -24,7 +24,6 @@ export async function initQuiz(){
 
 async function fetchCardData() {
 
-    startTime = Date.now();
     try {
         const response = await fetch(`${API_URL}/card`);
         if (!response.ok) {
@@ -41,6 +40,8 @@ async function fetchCardData() {
     } catch (error) {
         console.error('Fetch error:', error);
     }
+    startTime = Date.now();
+    // showTimer();
 }
 
 function fetchRandomCardData() {
@@ -53,16 +54,17 @@ function fetchRandomCardData() {
         populateCardData(cardDataArray[randomIndex]); // Using global array
         currentIndex = randomIndex;
         console.log("current " + currentIndex + "  random " + randomIndex)
-        console.log("Correct: " + correctGuesses.length)
-        console.log("incorrect: " + incorrectGuesses.length)
+
     } else {
         console.log('No cards available to display');
 
-    }
-        let endTime = Date.now();
-        let time = endTime-startTime;
-        console.log(time/100)
-        isCardRevealed = false;
+    }        
+    console.log("Correct: " + correctGuesses.length)
+    console.log("incorrect: " + incorrectGuesses.length)
+    let endTime = Date.now();
+    let time = endTime-startTime;
+    console.log(time/100)
+    isCardRevealed = false;
 }
 
 function populateCardData(card) {
@@ -83,3 +85,19 @@ function filterCorrectIncorrect() {
         cardDataArray.splice(currentIndex, 1)
     }
 }
+
+// function showTimer() {
+//     let date = new Date()
+//     let min = date.getMinutes();
+//     let sec = date.getSeconds();
+//     let mil = date.getMilliseconds();
+
+//     min = (min < 10) ? "0" + min : min;
+//     sec = (sec < 10) ? "0" + sec : sec;
+
+//     let time = min + ":" + sec + ":" + (mil/100)
+//     document.getElementById("clock-btn").innerText = time;
+//     var updateTime = setTimeout(function() {showTimer()}, 199)
+//     console.log(time)
+    
+// }
