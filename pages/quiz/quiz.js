@@ -6,8 +6,11 @@ let correctGuesses = [];
 let incorrectGuesses = [];
 let isCardRevealed = false;
 let currentIndex = 0;
+let startTime = Date.now();
 
 export async function initQuiz(){
+
+
     console.log("QUIZ! QUIZ! QUIZ!");
 
     // Call inital fetchCardData to fetch first record and render quiz data
@@ -20,6 +23,8 @@ export async function initQuiz(){
 }
 
 async function fetchCardData() {
+
+    
     try {
         const response = await fetch(`${API_URL}/card`);
         if (!response.ok) {
@@ -52,8 +57,12 @@ function fetchRandomCardData() {
         console.log("incorrect: " + incorrectGuesses.length)
     } else {
         console.log('No cards available to display');
+
     }
-    isCardRevealed = false;
+            let endTime = Date.now();
+        let time = endTime-startTime;
+        console.log(time/100)
+        isCardRevealed = false;
 }
 
 function populateCardData(card) {
