@@ -5,6 +5,7 @@ import {
   setActiveLink, renderHtml, loadHtml
 } from "./utils.js"
 import { initLogin } from "./pages/login/login.js"
+import { initDefaultMatrix } from "./pages/defaultMatrix/defaultMatrix.js";
 
 window.addEventListener("load", async () => {
 
