@@ -31,6 +31,8 @@ async function login() {
         const data = await response.json();
         storeLoginDetails(data);
         loginResult.textContent = "Login successful";
+        updateNavbar();
+        window.location.href = "/";
     } else {
         const errorData = await response.json();
         loginError.textContent = "Failed to login: " + errorData.message;
@@ -52,4 +54,37 @@ function storeLoginDetails(response) {
     console.log(response.username);
     console.log(response.roles);
     console.log(localStorage.getItem("token"));
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    updateNavbar();
+});
+
+function updateNavbar() {
+    const username = localStorage.getItem("username");
+    const navbarList = document.getElementById("login-menu");
+
+    if (username) {
+        navbarList.innerHTML = `
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    ${username}
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#" onclick="logout()">Logout</a></li>
+                </ul>
+            </li>`;
+    } else {
+        navbarList.innerHTML = `
+            <li class="nav-item">
+                <a class="nav-link" href="/login" data-navigo>Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/signup" data-navigo>Signup</a>
+            </li>`;
+    }
 }
