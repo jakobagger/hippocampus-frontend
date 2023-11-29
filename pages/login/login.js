@@ -4,6 +4,13 @@ export async function initLogin() {
     document.getElementById("login-form").addEventListener("submit", login);
 }
 
+export function logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    localStorage.removeItem("roles");
+    window.location.href = "/";
+}
+
 async function login() {
     event.preventDefault();
     
@@ -46,8 +53,6 @@ function storeLoginDetails(response) {
     localStorage.setItem("token", response.token);
     localStorage.setItem("username", response.username);
     localStorage.setItem("roles", response.roles);
-    
-    // TODO: add UI update (toggle) function
 
     console.log("Login fisk");
     console.log(response.token);
@@ -58,11 +63,26 @@ function storeLoginDetails(response) {
 
 document.addEventListener("DOMContentLoaded", function() {
     updateNavbar();
+    attachLogoutEventListener();
 });
+
+function attachLogoutEventListener() {
+    const logoutLink = document.getElementById("logoutLink");
+    if (logoutLink) {
+        logoutLink.addEventListener('click', function(event) {
+            event.preventDefault();
+            logout();
+        });
+    }
+}
 
 function updateNavbar() {
     const username = localStorage.getItem("username");
     const navbarList = document.getElementById("login-menu");
+    const roles = localStorage.getItem("roles");
+    console.log("Dine roller: " + roles);
+    console.log("Dit username: " + username);
+    console.log("Din token: " + localStorage.getItem("token"));
 
     if (username) {
         navbarList.innerHTML = `
@@ -72,10 +92,10 @@ function updateNavbar() {
                     ${username}
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><a class="dropdown-item nav-item" href="/profile">Profile</a></li>
+                    <li><a class="dropdown-item nav-item" href="/user-settings">Settings</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#" onclick="logout()">Logout</a></li>
+                    <li><a class="dropdown-item nav-item" id="logoutLink" href="/logout">Logout</a></li>
                 </ul>
             </li>`;
     } else {

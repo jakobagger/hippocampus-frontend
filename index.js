@@ -52,7 +52,7 @@ window.addEventListener("load", async () => {
       "/signup": () => {
         renderHtml(templateSignup, "content");
         initSignup()
-      },  
+    },  
     })
     .notFound(() => {
       renderHtml(templateNotFound, "content")
