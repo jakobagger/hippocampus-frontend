@@ -16,6 +16,9 @@ window.addEventListener("load", async () => {
   const templateLogin = await loadHtml("./pages/login/login.html")
   const templateSignup = await loadHtml("./pages/signup/signup.html")
   const templateQuiz = await loadHtml("./pages/quiz/quiz.html")
+  const templateAdmin = await loadHtml("./pages/admin/admin.html")
+  const templateProfile = await loadHtml("./pages/profile/profile.html")
+  const templateuserSettings = await loadHtml("./pages/userSettings/userSettings.html")
   
   let  router
   if (window.location.hostname === 'localhost' || window.location.hostname ==="127.0.0.1") {
@@ -39,20 +42,29 @@ window.addEventListener("load", async () => {
     .on({
       //For very simple "templates", you can just insert your HTML directly like below
       "/": () => {
-        renderHtml(templateQuiz, "content")
+        renderHtml(templateQuiz, "content");
         initQuiz()
       },
       "/about": () => {
-        renderHtml(templateAbout, "content")
-    },
-      "/login": () => {
-        renderHtml(templateLogin, "content")
-        initLogin()
-    },
-      "/signup": () => {
-        renderHtml(templateSignup, "content");
-        initSignup()
-      },  
+        renderHtml(templateAbout, "content");
+      },
+        "/login": () => {
+          renderHtml(templateLogin, "content");
+          initLogin()
+      },
+        "/signup": () => {
+          renderHtml(templateSignup, "content");
+          initSignup()
+      },
+        "/admin": () => {
+          renderHtml(templateAdmin, "content");
+      },
+        "/profile": () => {
+          renderHtml(templateProfile, "content");
+      },
+        "/settings": () => {
+          renderHtml(templateuserSettings, "content");
+      },
     })
     .notFound(() => {
       renderHtml(templateNotFound, "content")
