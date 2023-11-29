@@ -1,7 +1,7 @@
 import {API_URL} from "../../settings.js"
 const URL = API_URL + "/matrix"
-const URLvalue = API_URL + "/matrix/value" 
-const URLsuit = API_URL + "/matrix/suit"
+// const URLvalue = API_URL + "/matrix/value" 
+// const URLsuit = API_URL + "/matrix/suit"
 
 import { sanitizeStringWithTableRows } from "../../utils.js"
 
@@ -21,45 +21,45 @@ async function getAndRenderMatrix(){
   }
 }
 
-// async function getAndRenderValue(){
-//   try {
-//     const matrixFromServer = await fetch(URLvalue).then(res => res.json())
-//     renderMatrixData(matrixFromServer)
-//     console.log("got lost")
-//   } catch (e){
-//     console.log("Errot fetching matrix " + e)
-//   }
-// }
-
 
 function renderMatrixData(data) {
-  let headers = '<th></th>';
-  let idsRow = '<td></td>';
-  let numbersRow = '<td></td>';
-  let descriptionsRow = '<td></td>';
+  let valueNamesRow = '<td></td>';
+  let valueDescriptionsRow = '<td></td>';
+  let combinedRow = '';
+  let cardRowHearts = '';
+  let cardRowSpades = '';
+  let cardRowDiamonds = '';
+  let cardRowClubs = '';
+
+console.log(data[0].cards)
+console.log(data[0].cards[0].suit)
+if (data.length >= 0) {
+
+    data[0].suits.forEach((suit) => {
+      combinedRow += `<tr><td>${suit.suitName} <br> ${suit.suitDescription}</td>`;
+      data[0].cards.forEach((card) => {
+        if (card.suit == suit.suitName){
+          combinedRow += `<td><img src="${card.image}" style="width: 50px"/> <br> Person: ${card.person} <br> ${card.action} <br> ${card.object}</td>`;
+        }
+      });
+      combinedRow += `</tr>`;
+    })    
+  
 
   // Assuming all matrices have the same structure and number of values
-  if (data.length > 0) {
+
     // Create headers and rows for each value in the first matrix
-    data[0].values.forEach((value, index) => {
-      headers += `<th>Value ${index + 1}</th>`;
-      idsRow += `<td>${value.valueId}</td>`;
-      numbersRow += `<td>${value.valueNumber}</td>`;
-      descriptionsRow += `<td>${value.valueDescription}</td>`;
+    data[0].values.forEach((value) => {
+      valueNamesRow += `<td>${value.valueName}</td>`;
+      valueDescriptionsRow += `<td>${value.valueDescription}</td>`;
     });
   }
 
   // Wrap headers and rows in respective table row tags
-  let tableHeaders = `<tr>${headers}</tr>`;
-  let tableIdsRow = `<tr>${idsRow}</tr>`;
-  let tableNumbersRow = `<tr>${numbersRow}</tr>`;
-  let tableDescriptionsRow = `<tr>${descriptionsRow}</tr>`;
-
+ 
+  let tableValueNames = `<tr>${valueNamesRow}</tr>`;
+  let tableValueDescriptions = `<tr>${valueDescriptionsRow}</tr>`;
+ 
   // Combine all rows and set them as innerHTML of the table body
-  document.querySelector("#matrix-tbl-body").innerHTML = sanitizeStringWithTableRows(tableHeaders + tableIdsRow + tableNumbersRow + tableDescriptionsRow);
+  document.querySelector("#matrix-tbl-body").innerHTML = sanitizeStringWithTableRows(tableValueNames + tableValueDescriptions + combinedRow);
 }
-
-
-
-
-
