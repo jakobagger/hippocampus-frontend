@@ -19,6 +19,8 @@ export async function initQuiz(){
     // Add event listener to the 'Next' button
     document.getElementById('next-card-btn').addEventListener('click', fetchRandomCardData);
     document.getElementById("show-card-btn").addEventListener("click", function() {isCardRevealed=true})
+    document.getElementById("play-again-btn").addEventListener("click", resetCardArrays)
+
 
 }
 
@@ -30,7 +32,7 @@ async function fetchCardData() {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         cardDataArray = await response.json(); // Store response in global array
-        unchainedArray = cardDataArray;
+        unchainedArray = cardDataArray.slice();
 
         if (cardDataArray.length > 0) {
             populateCardData(cardDataArray[0]); // First record
@@ -45,8 +47,13 @@ async function fetchCardData() {
 }
 
 function fetchRandomCardData() {
-    console.log(isCardRevealed)
-    filterCorrectIncorrect()
+    filterCorrectIncorrect()   
+    let endTime = Date.now();
+    let time = endTime-startTime;
+    document.getElementById("timer-badge").innerText = time
+    if(cardDataArray.length ===1) {
+        document.getElementById("next-card-btn").innerText = "Finish";
+    }
 
     if (cardDataArray && cardDataArray.length > 0) {
         console.log(cardDataArray.length)
@@ -56,14 +63,15 @@ function fetchRandomCardData() {
         console.log("current " + currentIndex + "  random " + randomIndex)
 
     } else {
-        console.log('No cards available to display');
+        showScore(time)
+        toggleDisplayStyle("next-card-btn");
+        toggleDisplayStyle("play-again-btn");
 
     }        
+
     console.log("Correct: " + correctGuesses.length)
     console.log("incorrect: " + incorrectGuesses.length)
-    let endTime = Date.now();
-    let time = endTime-startTime;
-    console.log(time/100)
+ 
     isCardRevealed = false;
 }
 
@@ -84,6 +92,35 @@ function filterCorrectIncorrect() {
         correctGuesses.push(cardDataArray[currentIndex])
         cardDataArray.splice(currentIndex, 1)
     }
+}
+
+function toggleDisplayStyle(btn) {
+    var btn = document.getElementById(btn);
+    if(btn.style.display ==="none") {
+        btn.style.display = "block";
+    } else {
+        btn.style.display = "none";
+    }
+
+}
+
+function resetCardArrays() {
+    cardDataArray = unchainedArray.slice();
+    correctGuesses.length = 0;
+    incorrectGuesses.length = 0;
+    toggleDisplayStyle("next-card-btn");
+    toggleDisplayStyle("play-again-btn");
+    fetchCardData();
+    document.getElementById("next-card-btn").innerText = "Next";
+    toggleDisplayStyle("score-badge")
+    document.getElementById("timer-badge").innerText = "Timer"
+}
+
+function showScore(time) {
+    toggleDisplayStyle("score-badge")
+    document.getElementById("timer-badge").innerText = time;
+    document.getElementById("score-badge").innerText = "Score: "+correctGuesses.length + " out of " + unchainedArray.length;
+
 }
 
 // function showTimer() {
