@@ -54,7 +54,6 @@ function storeLoginDetails(response) {
     localStorage.setItem("username", response.username);
     localStorage.setItem("roles", response.roles);
 
-    console.log("Login fisk");
     console.log(response.token);
     console.log(response.username);
     console.log(response.roles);
@@ -80,11 +79,27 @@ function updateNavbar() {
     const username = localStorage.getItem("username");
     const navbarList = document.getElementById("login-menu");
     const roles = localStorage.getItem("roles");
+    // TODO: Slet de her console.log()
     console.log("Dine roller: " + roles);
     console.log("Dit username: " + username);
     console.log("Din token: " + localStorage.getItem("token"));
 
-    if (username) {
+    if (username && roles.includes("ADMIN")) {
+        navbarList.innerHTML = `
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    ${username}
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item nav-item" href="/admin">ADMIN</a></li>
+                    <li><a class="dropdown-item nav-item" href="/profile">Profile</a></li>
+                    <li><a class="dropdown-item nav-item" href="/user-settings">Settings</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item nav-item" id="logoutLink" href="/logout">Logout</a></li>
+                </ul>
+            </li>`;
+    } else if (username) {
         navbarList.innerHTML = `
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
@@ -100,11 +115,11 @@ function updateNavbar() {
             </li>`;
     } else {
         navbarList.innerHTML = `
-            <li class="nav-item">
-                <a class="nav-link" href="/login" data-navigo>Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/signup" data-navigo>Signup</a>
-            </li>`;
+        <li class="nav-item">
+            <a class="nav-link" href="/login" data-navigo>Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/signup" data-navigo>Signup</a>
+        </li>`;
     }
 }
