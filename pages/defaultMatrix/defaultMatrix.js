@@ -1,0 +1,65 @@
+import {API_URL} from "../../settings.js"
+const URL = API_URL + "/matrix"
+// const URLvalue = API_URL + "/matrix/value" 
+// const URLsuit = API_URL + "/matrix/suit"
+
+import { sanitizeStringWithTableRows } from "../../utils.js"
+
+export async function initDefaultMatrix(){
+  console.log("got you")
+  getAndRenderMatrix();
+}
+
+
+async function getAndRenderMatrix(){
+  try {
+    const matrixFromServer = await fetch(URL).then(res => res.json())
+    renderMatrixData(matrixFromServer)
+    console.log("got it")
+  } catch (e){
+    console.log("Errot fetching matrix " + e)
+  }
+}
+
+
+function renderMatrixData(data) {
+  let valueNamesRow = '<td></td>';
+  let valueDescriptionsRow = '<td></td>';
+  let combinedRow = '';
+  let cardRowHearts = '';
+  let cardRowSpades = '';
+  let cardRowDiamonds = '';
+  let cardRowClubs = '';
+
+console.log(data[0].cards)
+console.log(data[0].cards[0].suit)
+if (data.length >= 0) {
+
+    data[0].suits.forEach((suit) => {
+      combinedRow += `<tr><td>${suit.suitName} <br> ${suit.suitDescription}</td>`;
+      data[0].cards.forEach((card) => {
+        if (card.suit == suit.suitName){
+          combinedRow += `<td><img src="${card.image}" style="width: 50px"/> <br> Person: ${card.person} <br> ${card.action} <br> ${card.object}</td>`;
+        }
+      });
+      combinedRow += `</tr>`;
+    })    
+  
+
+  // Assuming all matrices have the same structure and number of values
+
+    // Create headers and rows for each value in the first matrix
+    data[0].values.forEach((value) => {
+      valueNamesRow += `<td>${value.valueName}</td>`;
+      valueDescriptionsRow += `<td>${value.valueDescription}</td>`;
+    });
+  }
+
+  // Wrap headers and rows in respective table row tags
+ 
+  let tableValueNames = `<tr>${valueNamesRow}</tr>`;
+  let tableValueDescriptions = `<tr>${valueDescriptionsRow}</tr>`;
+ 
+  // Combine all rows and set them as innerHTML of the table body
+  document.querySelector("#matrix-tbl-body").innerHTML = sanitizeStringWithTableRows(tableValueNames + tableValueDescriptions + combinedRow);
+}
