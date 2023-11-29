@@ -1,7 +1,7 @@
 import { API_URL } from "../../settings.js";
 
 let cardDataArray = []; // Defines cardDataArray at the top level of the module
-let unchainedArray = []
+let unchangedArray = []
 let correctGuesses = [];
 let incorrectGuesses = [];
 let isCardRevealed = false;
@@ -20,6 +20,7 @@ export async function initQuiz(){
     document.getElementById('next-card-btn').addEventListener('click', fetchRandomCardData);
     document.getElementById("show-card-btn").addEventListener("click", function() {isCardRevealed=true})
     document.getElementById("play-again-btn").addEventListener("click", resetCardArrays)
+    
 
 
 }
@@ -32,7 +33,7 @@ async function fetchCardData() {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         cardDataArray = await response.json(); // Store response in global array
-        unchainedArray = cardDataArray.slice();
+        unchangedArray = cardDataArray.slice();
 
         if (cardDataArray.length > 0) {
             populateCardData(cardDataArray[0]); // First record
@@ -49,7 +50,7 @@ async function fetchCardData() {
 function fetchRandomCardData() {
     filterCorrectIncorrect()   
     let endTime = Date.now();
-    let time = endTime-startTime;
+    let time = (endTime-startTime)/1000;
     document.getElementById("timer-badge").innerText = time
     if(cardDataArray.length ===1) {
         document.getElementById("next-card-btn").innerText = "Finish";
@@ -105,7 +106,7 @@ function toggleDisplayStyle(btn) {
 }
 
 function resetCardArrays() {
-    cardDataArray = unchainedArray.slice();
+    cardDataArray = unchangedArray.slice();
     correctGuesses.length = 0;
     incorrectGuesses.length = 0;
     toggleDisplayStyle("next-card-btn");
@@ -119,9 +120,11 @@ function resetCardArrays() {
 function showScore(time) {
     toggleDisplayStyle("score-badge")
     document.getElementById("timer-badge").innerText = time;
-    document.getElementById("score-badge").innerText = "Score: "+correctGuesses.length + " out of " + unchainedArray.length;
+    document.getElementById("score-badge").innerText = "Score: "+correctGuesses.length + " out of " + unchangedArray.length;
 
 }
+
+
 
 // function showTimer() {
 //     let date = new Date()
