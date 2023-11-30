@@ -75,7 +75,6 @@ function fetchRandomCardData() {
         showScore(time)
         toggleDisplayStyle("next-card-btn");
         toggleDisplayStyle("play-again-btn");
-        toggleDisplayStyle("save-score-btn")
 
     }        
 
@@ -127,11 +126,15 @@ function resetCardArrays() {
     document.getElementById("next-card-btn").innerText = "Next";
     toggleDisplayStyle("score-badge")
     document.getElementById("timer-badge").innerText = "Timer"
-    toggleDisplayStyle("save-score-btn")
+    document.getElementById("save-score-btn").style.display = "none";
 }
 
 function showScore(time) {
     toggleDisplayStyle("score-badge")
+    if(window.localStorage.getItem("roles") == "USER") {
+        console.log(window.localStorage.getItem("roles"))
+        toggleDisplayStyle("save-score-btn")
+    }
     document.getElementById("timer-badge").innerText = time;
     document.getElementById("score-badge").innerText = "Score: "+correctGuesses.length + " out of " + unchangedArray.length;
 
