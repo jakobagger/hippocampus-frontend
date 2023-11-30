@@ -57,8 +57,6 @@ window.addEventListener("load", async () => {
       "/defaultMatrix": () => {
         renderHtml(templateDefaultMatrix, "content")
         initDefaultMatrix()
-      }  
-        renderHtml(templateAbout, "content");
       },
         "/login": () => {
           renderHtml(templateLogin, "content");
