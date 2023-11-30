@@ -1,7 +1,5 @@
 import {API_URL} from "../../settings.js"
 const URL = API_URL + "/matrix"
-// const URLvalue = API_URL + "/matrix/value" 
-// const URLsuit = API_URL + "/matrix/suit"
 
 import { sanitizeStringWithTableRows } from "../../utils.js"
 
@@ -26,10 +24,6 @@ function renderMatrixData(data) {
   let valueNamesRow = '<td></td>';
   let valueDescriptionsRow = '<td></td>';
   let combinedRow = '';
-  let cardRowHearts = '';
-  let cardRowSpades = '';
-  let cardRowDiamonds = '';
-  let cardRowClubs = '';
 
 console.log(data[0].cards)
 console.log(data[0].cards[0].suit)
@@ -39,16 +33,13 @@ if (data.length >= 0) {
       combinedRow += `<tr><td>${suit.suitName} <br> ${suit.suitDescription}</td>`;
       data[0].cards.forEach((card) => {
         if (card.suit == suit.suitName){
-          combinedRow += `<td><img src="${card.image}" style="width: 50px"/> <br> Person: ${card.person} <br> ${card.action} <br> ${card.object}</td>`;
+          combinedRow += `<td><img src="${card.image}" style="width: 100px"/> <br> Person: ${card.person} <br> ${card.action} <br> ${card.object}</td>`;
         }
       });
       combinedRow += `</tr>`;
     })    
   
 
-  // Assuming all matrices have the same structure and number of values
-
-    // Create headers and rows for each value in the first matrix
     data[0].values.forEach((value) => {
       valueNamesRow += `<td>${value.valueName}</td>`;
       valueDescriptionsRow += `<td>${value.valueDescription}</td>`;
