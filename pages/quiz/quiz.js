@@ -7,6 +7,7 @@ let incorrectGuesses = [];
 let isCardRevealed = false;
 let currentIndex = 0;
 let startTime;
+let time;
 
 export async function initQuiz(){
 
@@ -20,6 +21,7 @@ export async function initQuiz(){
     document.getElementById('next-card-btn').addEventListener('click', fetchRandomCardData);
     document.getElementById("show-card-btn").addEventListener("click", function() {isCardRevealed=true})
     document.getElementById("play-again-btn").addEventListener("click", resetCardArrays)
+    document.getElementById("save-score-btn").addEventListener("click", saveScore)
     
 
 
@@ -67,6 +69,7 @@ function fetchRandomCardData() {
         showScore(time)
         toggleDisplayStyle("next-card-btn");
         toggleDisplayStyle("play-again-btn");
+        toggleDisplayStyle("save-score-btn")
 
     }        
 
@@ -122,6 +125,35 @@ function showScore(time) {
     document.getElementById("timer-badge").innerText = time;
     document.getElementById("score-badge").innerText = "Score: "+correctGuesses.length + " out of " + unchangedArray.length;
 
+}
+
+async function saveScore() {
+
+    const username = window.localStorage.getItem("username")
+    const quiz_id = 1
+    let time = document.getElementById("timer-badge").innerText
+    let scoreNumber = document.getElementById("score-badge").innerText
+    const payload = {
+        username,
+        quiz_id,
+        time,
+        scoreNumber
+        };
+    
+        try {
+        const response = await fetch(`${API_URL}/score`, {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        }) 
+        if (response.ok) {
+            console.log("save succesful")
+        }
+        } catch (err) {
+            console.log(err)
+        }
 }
 
 
