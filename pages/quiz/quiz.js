@@ -5,6 +5,7 @@ let unchangedArray = []
 let correctGuesses = [];
 let incorrectGuesses = [];
 let isCardRevealed = false;
+let notFirstCard = false
 let currentIndex = 0;
 let startTime;
 let time;
@@ -30,14 +31,17 @@ export async function initQuiz(){
 async function fetchCardData() {
 
     try {
-        const response = await fetch(`${API_URL}/card`);
+        const response = await fetch(`${API_URL}/quiz`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        cardDataArray = await response.json(); // Store response in global array
-        unchangedArray = cardDataArray.slice();
+        let quizData = await response.json(); // Store response in global array
+        //quizData is an array of quizes, so can't get cards by writing quizData.cards. Need to specify the quiz array index, or fix the backend
+        cardDataArray = cardDataArray.concat(quizData[0].cards)
+        unchangedArray.push(...cardDataArray);
 
         if (cardDataArray.length > 0) {
+            console.log(cardDataArray.length)
             populateCardData(cardDataArray[0]); // First record
         } else {
             console.log('No records found in the response');
@@ -50,7 +54,9 @@ async function fetchCardData() {
 }
 
 function fetchRandomCardData() {
-    filterCorrectIncorrect()   
+    if(notFirstCard) {
+        filterCorrectIncorrect()
+        }      
     let endTime = Date.now();
     let time = (endTime-startTime)/1000;
     document.getElementById("timer-badge").innerText = time
@@ -77,6 +83,7 @@ function fetchRandomCardData() {
     console.log("incorrect: " + incorrectGuesses.length)
  
     isCardRevealed = false;
+    notFirstCard = true
 }
 
 function populateCardData(card) {
@@ -114,10 +121,13 @@ function resetCardArrays() {
     incorrectGuesses.length = 0;
     toggleDisplayStyle("next-card-btn");
     toggleDisplayStyle("play-again-btn");
-    fetchCardData();
+    notFirstCard = false;
+    startTime = Date.now()
+    fetchRandomCardData()
     document.getElementById("next-card-btn").innerText = "Next";
     toggleDisplayStyle("score-badge")
     document.getElementById("timer-badge").innerText = "Timer"
+    toggleDisplayStyle("save-score-btn")
 }
 
 function showScore(time) {
