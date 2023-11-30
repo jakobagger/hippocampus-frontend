@@ -4,8 +4,11 @@ import "https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.0/purify.min.js"
 import {
   setActiveLink, renderHtml, loadHtml
 } from "./utils.js"
+
 import { initLogin } from "./pages/login/login.js"
 import { initDefaultMatrix } from "./pages/defaultMatrix/defaultMatrix.js";
+import { initSignup } from "./pages/signup/signup.js";
+import { initQuiz } from "./pages/quiz/quiz.js";
 
 window.addEventListener("load", async () => {
 
@@ -13,12 +16,24 @@ window.addEventListener("load", async () => {
   const templateNotFound = await loadHtml("./pages/notFound/notFound.html")
   const templateLogin = await loadHtml("./pages/login/login.html")
   const templateDefaultMatrix = await loadHtml("./pages/defaultMatrix/defaultMatrix.html")
+  const templateSignup = await loadHtml("./pages/signup/signup.html")
+  const templateQuiz = await loadHtml("./pages/quiz/quiz.html")
+  const templateAdmin = await loadHtml("./pages/admin/admin.html")
+  const templateProfile = await loadHtml("./pages/profile/profile.html")
+  const templateuserSettings = await loadHtml("./pages/userSettings/userSettings.html")
   
-  const router = new Navigo("/", { hash: true });
+  let  router
+  if (window.location.hostname === 'localhost' || window.location.hostname ==="127.0.0.1") {
+     console.log('Running locally (using hash (/#):'+window.location.hostname);
+     router = new Navigo("/", { hash: true })
+  } else {
+    console.log('Assume we are on Azure, make sure you have added the staticwebapp.config.json file')
+    router = new Navigo("/")
+  }
+ 
   //Not especially nice, BUT MEANT to simplify things. Make the router global so it can be accessed from all js-files
   window.router = router
  
-
   router
     .hooks({
       before(done, match) {
@@ -28,12 +43,10 @@ window.addEventListener("load", async () => {
     })
     .on({
       //For very simple "templates", you can just insert your HTML directly like below
-      "/": () => document.getElementById("content").innerHTML =
-        `<h2>Home</h2>
-      <p style='margin-top:2em'>
-      INSERT QUIZ HERE?
-      </p>
-     `,
+      "/": () => {
+        renderHtml(templateQuiz, "content");
+        initQuiz()
+      },
       "/about": () => {
         renderHtml(templateAbout, "content")
     },
@@ -45,6 +58,25 @@ window.addEventListener("load", async () => {
         renderHtml(templateDefaultMatrix, "content")
         initDefaultMatrix()
       }  
+        renderHtml(templateAbout, "content");
+      },
+        "/login": () => {
+          renderHtml(templateLogin, "content");
+          initLogin()
+      },
+        "/signup": () => {
+          renderHtml(templateSignup, "content");
+          initSignup()
+      },
+        "/admin": () => {
+          renderHtml(templateAdmin, "content");
+      },
+        "/profile": () => {
+          renderHtml(templateProfile, "content");
+      },
+        "/settings": () => {
+          renderHtml(templateuserSettings, "content");
+      },
     })
     .notFound(() => {
       renderHtml(templateNotFound, "content")
