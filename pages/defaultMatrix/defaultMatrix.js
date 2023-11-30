@@ -33,12 +33,13 @@ if (data.length >= 0) {
       combinedRow += `<tr><td>${suit.suitName} <br> ${suit.suitDescription}</td>`;
       data[0].cards.forEach((card) => {
         if (card.suit == suit.suitName){
-          combinedRow += `<td><img src="${card.image}" style="width: 100px"/> <br> Person: ${card.person} <br> ${card.action} <br> ${card.object}</td>`;
+          combinedRow += `<td><img src="${card.image}" style="width: 60px"/> <br> Person: ${card.person} <br> ${card.action} <br> ${card.object}</td>`;
         }
       });
       combinedRow += `</tr>`;
     })    
   
+
 
     data[0].values.forEach((value) => {
       valueNamesRow += `<td>${value.valueName}</td>`;
