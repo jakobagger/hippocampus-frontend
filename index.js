@@ -6,6 +6,7 @@ import {
 } from "./utils.js"
 
 import { initLogin } from "./pages/login/login.js"
+import { initDefaultMatrix } from "./pages/defaultMatrix/defaultMatrix.js";
 import { initSignup } from "./pages/signup/signup.js";
 import { initQuiz } from "./pages/quiz/quiz.js";
 
@@ -14,6 +15,7 @@ window.addEventListener("load", async () => {
   const templateAbout = await loadHtml("./pages/about/about.html")
   const templateNotFound = await loadHtml("./pages/notFound/notFound.html")
   const templateLogin = await loadHtml("./pages/login/login.html")
+  const templateDefaultMatrix = await loadHtml("./pages/defaultMatrix/defaultMatrix.html")
   const templateSignup = await loadHtml("./pages/signup/signup.html")
   const templateQuiz = await loadHtml("./pages/quiz/quiz.html")
   const templateAdmin = await loadHtml("./pages/admin/admin.html")
@@ -46,7 +48,15 @@ window.addEventListener("load", async () => {
         initQuiz()
       },
       "/about": () => {
-        renderHtml(templateAbout, "content");
+        renderHtml(templateAbout, "content")
+    },
+      "/login": () => {
+        renderHtml(templateLogin, "content")
+        initLogin()
+    },
+      "/defaultMatrix": () => {
+        renderHtml(templateDefaultMatrix, "content")
+        initDefaultMatrix()
       },
         "/login": () => {
           renderHtml(templateLogin, "content");
