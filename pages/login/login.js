@@ -1,4 +1,4 @@
-let URL = "http://localhost:8080/api"
+import { API_URL } from "../../settings.js";
 
 export async function initLogin() {
     document.getElementById("login-form").addEventListener("submit", login);
@@ -26,7 +26,7 @@ async function login() {
     };
 
     try {
-    const response = await fetch(`${URL}/auth/login`, {
+    const response = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: {
         "Content-Type": "application/json"

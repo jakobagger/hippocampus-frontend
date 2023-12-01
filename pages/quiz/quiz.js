@@ -5,6 +5,7 @@ let unchangedArray = []
 let correctGuesses = [];
 let incorrectGuesses = [];
 let isCardRevealed = false;
+let notFirstCard = false
 let currentIndex = 0;
 let startTime;
 let time;
@@ -22,22 +23,25 @@ export async function initQuiz(){
     document.getElementById("show-card-btn").addEventListener("click", function() {isCardRevealed=true})
     document.getElementById("play-again-btn").addEventListener("click", resetCardArrays)
     document.getElementById("save-score-btn").addEventListener("click", saveScore)
-    
 
-
+    //Add event listener for keystrokes
+    document.addEventListener("keydown", handleShortCuts);
 }
 
 async function fetchCardData() {
 
     try {
-        const response = await fetch(`${API_URL}/card`);
+        const response = await fetch(`${API_URL}/quiz`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        cardDataArray = await response.json(); // Store response in global array
-        unchangedArray = cardDataArray.slice();
+        let quizData = await response.json(); // Store response in global array
+        //quizData is an array of quizes, so can't get cards by writing quizData.cards. Need to specify the quiz array index, or fix the backend
+        cardDataArray = cardDataArray.concat(quizData[0].cards)
+        unchangedArray.push(...cardDataArray);
 
         if (cardDataArray.length > 0) {
+            console.log(cardDataArray.length)
             populateCardData(cardDataArray[0]); // First record
         } else {
             console.log('No records found in the response');
@@ -50,7 +54,9 @@ async function fetchCardData() {
 }
 
 function fetchRandomCardData() {
-    filterCorrectIncorrect()   
+    if(notFirstCard) {
+        filterCorrectIncorrect()
+        }      
     let endTime = Date.now();
     let time = (endTime-startTime)/1000;
     document.getElementById("timer-badge").innerText = time
@@ -69,7 +75,6 @@ function fetchRandomCardData() {
         showScore(time)
         toggleDisplayStyle("next-card-btn");
         toggleDisplayStyle("play-again-btn");
-        toggleDisplayStyle("save-score-btn")
 
     }        
 
@@ -77,6 +82,7 @@ function fetchRandomCardData() {
     console.log("incorrect: " + incorrectGuesses.length)
  
     isCardRevealed = false;
+    notFirstCard = true
 }
 
 function populateCardData(card) {
@@ -114,14 +120,21 @@ function resetCardArrays() {
     incorrectGuesses.length = 0;
     toggleDisplayStyle("next-card-btn");
     toggleDisplayStyle("play-again-btn");
-    fetchCardData();
+    notFirstCard = false;
+    startTime = Date.now()
+    fetchRandomCardData()
     document.getElementById("next-card-btn").innerText = "Next";
     toggleDisplayStyle("score-badge")
     document.getElementById("timer-badge").innerText = "Timer"
+    document.getElementById("save-score-btn").style.display = "none";
 }
 
 function showScore(time) {
     toggleDisplayStyle("score-badge")
+    if(window.localStorage.getItem("roles") == "USER") {
+        console.log(window.localStorage.getItem("roles"))
+        toggleDisplayStyle("save-score-btn")
+    }
     document.getElementById("timer-badge").innerText = time;
     document.getElementById("score-badge").innerText = "Score: "+correctGuesses.length + " out of " + unchangedArray.length;
 
@@ -173,3 +186,14 @@ async function saveScore() {
 //     console.log(time)
     
 // }
+
+function handleShortCuts (evt) {
+    if (evt.key === "n"){
+        evt.preventDefault();
+        fetchRandomCardData();
+    }
+    if (evt.key === "s"){
+        evt.preventDefault();
+        //TODO SHOW CARD
+    }
+}
