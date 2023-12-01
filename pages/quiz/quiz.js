@@ -10,6 +10,9 @@ export async function initQuiz(){
 
     // Add event listener to the 'Next' button
     document.getElementById('next-card-btn').addEventListener('click', fetchRandomCardData);
+
+    //Add event listener for keystrokes
+    document.addEventListener("keydown", handleShortCuts);
 }
 
 async function fetchCardData() {
@@ -46,3 +49,16 @@ function populateCardData(card) {
     document.getElementById('card').value = card.value + " of " + card.suit || '';
     document.getElementById('current-card-image').src = card.image || '';
 }
+
+function handleShortCuts (evt) {
+    if (evt.key === "n"){
+        evt.preventDefault();
+        fetchRandomCardData();
+    }
+    if (evt.key === "s"){
+        evt.preventDefault();
+        //TODO SHOW CARD
+    }
+}
+
+
