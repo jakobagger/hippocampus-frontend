@@ -23,9 +23,9 @@ export async function initQuiz(){
     document.getElementById("show-card-btn").addEventListener("click", function() {isCardRevealed=true})
     document.getElementById("play-again-btn").addEventListener("click", resetCardArrays)
     document.getElementById("save-score-btn").addEventListener("click", saveScore)
-    
 
-
+    //Add event listener for keystrokes
+    document.addEventListener("keydown", handleShortCuts);
 }
 
 async function fetchCardData() {
@@ -186,3 +186,14 @@ async function saveScore() {
 //     console.log(time)
     
 // }
+
+function handleShortCuts (evt) {
+    if (evt.key === "n"){
+        evt.preventDefault();
+        fetchRandomCardData();
+    }
+    if (evt.key === "s"){
+        evt.preventDefault();
+        //TODO SHOW CARD
+    }
+}
