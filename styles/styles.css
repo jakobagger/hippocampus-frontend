@@ -31,3 +31,22 @@ body, text {
   .form-container form-group row{
     margin-bottom: 20px;
   }
+  #addMatrix {
+    text-align: center;
+    margin: 0 auto;
+    max-width: 600px; /* Adjust the maximum width as per your requirement */
+}
+
+.form-label {
+    display: block;
+    text-align: left;
+}
+
+.form-control {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#add-matrix-btn {
+    width: 50%;
+}
