@@ -8,7 +8,6 @@ let isCardRevealed = false;
 let notFirstCard = false
 let currentIndex = 0;
 let startTime;
-let time;
 
 export async function initQuiz(){
 
@@ -26,6 +25,17 @@ export async function initQuiz(){
 
     //Add event listener for keystrokes
     document.addEventListener("keydown", handleShortCuts);
+
+    //Add event listeners to checkboxes
+    const personCheckbox = document.getElementById('personCheckBox');
+    const actionCheckbox = document.getElementById('actionCheckbox')
+    const objectCheckbox = document.getElementById('objectCheckBox');
+    const cardCheckbox = document.getElementById('cardCheckBox');
+
+    personCheckbox.addEventListener('change', checkPersonCheckBox);
+    actionCheckbox.addEventListener('change', checkActionCheckBox);
+    objectCheckbox.addEventListener('change', checkObjectCheckBox);
+    cardCheckbox.addEventListener('change', checkCardCheckBox);
 }
 
 async function fetchCardData() {
@@ -86,10 +96,22 @@ function fetchRandomCardData() {
 }
 
 function populateCardData(card) {
-    document.getElementById('name').value = card.person || '';
-    document.getElementById('action').value = card.action || '';
-    document.getElementById('object').value = card.object || '';
-    document.getElementById('card').value = card.value + " of " + card.suit || '';
+    if (personCheckbox.checked){
+        document.getElementById('name').value = card.person || '';
+    } else {document.getElementById('name').value = '';}
+    
+    if (actionCheckbox.checked){
+        document.getElementById('action').value = card.action || '';
+    } else {document.getElementById('name').value = '';}
+    
+    if (objectCheckbox.checked){
+        document.getElementById('object').value = card.object || ''; 
+    } else {document.getElementById('name').value = '';}
+    
+    if (cardCheckbox.checked){
+        document.getElementById('card').value = card.value + " of " + card.suit || '';
+    } else {document.getElementById('name').value = '';}
+    
     document.getElementById('current-card-image').src = card.image || '';
 }
 
@@ -207,5 +229,46 @@ function handleShortCuts (evt) {
     }
     if (evt.altKey && evt.code === 'KeyC'){
         document.getElementById("card").focus();
+    }
+
+}
+
+function checkPersonCheckBox(evt){
+
+    console.log("hello from personCheckerFunction")
+
+    if (evt.target.checked){
+        document.getElementById('name').value = cardDataArray[currentIndex].person || '';
+    } else {
+        document.getElementById('name').value = '';
+    }
+}
+
+function checkActionCheckBox(evt){
+    console.log("hello from actionCheckerFunction");
+    if (evt.target.checked){
+        document.getElementById('action').value = cardDataArray[currentIndex].action || '';
+    } else {
+        document.getElementById('action').value = '';
+    }
+}
+
+function checkObjectCheckBox(evt){
+    console.log("hello from objectCheckerFunction");
+
+    if (evt.target.checked){
+        document.getElementById('object').value = cardDataArray[currentIndex].object || '';
+    } else {
+        document.getElementById('object').value = '';
+    }
+}
+
+function checkCardCheckBox(evt){
+    console.log("hello from cardCheckerFunction");
+
+    if (evt.target.checked){
+        document.getElementById('card').value = cardDataArray[currentIndex].value + " of " + cardDataArray[currentIndex].suit || '';
+    } else {
+        document.getElementById('card').value = '';
     }
 }
