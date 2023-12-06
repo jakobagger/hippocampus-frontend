@@ -20,17 +20,13 @@ export async function initQuiz(){
 
     // Add event listener to the 'Next' button
     document.getElementById('next-card-btn').addEventListener('click', fetchRandomCardData);
+    // Add event listener to the 'Show' button
     document.getElementById("show-card-btn").addEventListener("click", function() {
-        isCardRevealed=true;
         checkAnswers(cardDataArray[currentIndex]);
     })
     document.getElementById("play-again-btn").addEventListener("click", resetCardArrays)
     document.getElementById("save-score-btn").addEventListener("click", saveScore)
-
-    //Add event listener for keystrokes
-
-    //TODO: TILFØJ 
-    //document.addEventListener("keydown", handleShortCuts); 
+    document.addEventListener("keydown", handleShortCuts); 
 }
 
 async function fetchCardData() {
@@ -97,7 +93,7 @@ function populateCardData(card) {
         document.getElementById('object').value = '';
         document.getElementById('card').value = '';
 }
-
+//START
 function checkAnswers() {
     const fields = [
         {id: 'name', prop: 'person'},
@@ -107,32 +103,31 @@ function checkAnswers() {
 
     fields.forEach(field => {
         const userInput = document.getElementById(field.id).value.trim().toLowerCase();
-        const correctAnswer = (cardDataArray[currentIndex][field.prop]).trim().toLowerCase();
+        const correctAnswer = (cardDataArray[currentIndex][field.prop] || '').trim().toLowerCase();
 
         console.log(`Checking ${field.id}: User input: '${userInput}', Correct answer: '${correctAnswer}'`);
 
-        if(userInput.toLowerCase() === correctAnswer.toLowerCase()) {
-            console.log("Correct!")
-            document.getElementById(field.id).style.backgroundColor = "green";
+        const element = document.getElementById(field.id);
+        if (element) {
+            element.style.backgroundColor = (userInput == correctAnswer ? 'green' : 'red');
         } else {
-            console.log("Incorrect!")
-            document.getElementById(field.id).style.backgroundColor = "red";
+            console.error(`Element with id '${field.id}' not found`);
         }
     });
 
     const cardInput = document.getElementById('card').value.trim().toLowerCase();
-    const correctCard = (card.value + " of " + card.suit || '').trim().toLowerCase();
+    const cardValue = (cardDataArray[currentIndex]['value'] || '').trim().toLowerCase();
+    const cardSuit = (cardDataArray[currentIndex]['suit'] || '').trim().toLowerCase();
+    const correctCard = `${cardValue} of ${cardSuit}`
 
     console.log(`Checking card: User input: '${cardInput}', Correct answer: '${correctCard}'`);
 
-    if(cardInput.toLowerCase() === correctCard.toLowerCase()) {
-        console.log("Correct! fra farve if")
-        document.getElementById('card').style.backgroundColor = "green";
+    const cardElement = document.getElementById('card');
+    if (cardElement) {
+        cardElement.style.backgroundColor = console.log(cardInput == correctCard ? 'green' : 'red');
     } else {
-        console.log("Incorrect!")
-        document.getElementById('card fra farve if').style.backgroundColor = "red";
+        console.error(`Element with id 'card' not found`);
     }
-
 }
 
 function filterCorrectIncorrect() {
@@ -229,6 +224,9 @@ async function saveScore() {
     
 // }
 
+
+// Jakobs gamle kode..
+
 // function handleShortCuts (evt) {
 //     if (evt.key === "n"){
 //         evt.preventDefault();
@@ -239,3 +237,27 @@ async function saveScore() {
 //         //TODO SHOW CARD
 //     }
 // }
+
+
+function handleShortCuts (evt) {
+    if (evt.shiftKey && evt.code === 'KeyN'){
+        evt.preventDefault();
+        document.getElementById("next-card-btn").click();
+    }
+    if (evt.shiftKey && evt.code === 'KeyS'){
+        evt.preventDefault();
+        document.getElementById("show-card-btn").click();
+    }
+    if (evt.altKey && evt.code === 'KeyP'){
+        document.getElementById("person").focus();
+    }
+    if (evt.altKey && evt.code === 'KeyA'){
+        document.getElementById("action").focus();
+    }
+    if (evt.altKey && evt.code === 'KeyO'){
+        document.getElementById("object").focus();
+    }
+    if (evt.altKey && evt.code === 'KeyC'){
+        document.getElementById("card").focus();
+    }
+}
