@@ -14,6 +14,12 @@ export async function initQuiz(){
 
     console.log("QUIZ! QUIZ! QUIZ!");
 
+    
+    const personCheckbox = document.getElementById('personCheckbox');
+    const actionCheckbox = document.getElementById('actionCheckbox')
+    const objectCheckbox = document.getElementById('objectCheckbox');
+    const cardCheckbox = document.getElementById('cardCheckbox');
+
     // Call inital fetchCardData to fetch first record and render quiz data
     fetchCardData();
 
@@ -27,11 +33,6 @@ export async function initQuiz(){
     document.addEventListener("keydown", handleShortCuts);
 
     //Add event listeners to checkboxes
-    const personCheckbox = document.getElementById('personCheckBox');
-    const actionCheckbox = document.getElementById('actionCheckbox')
-    const objectCheckbox = document.getElementById('objectCheckBox');
-    const cardCheckbox = document.getElementById('cardCheckBox');
-
     personCheckbox.addEventListener('change', checkPersonCheckBox);
     actionCheckbox.addEventListener('change', checkActionCheckBox);
     objectCheckbox.addEventListener('change', checkObjectCheckBox);
