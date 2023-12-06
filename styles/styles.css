@@ -22,12 +22,66 @@ body, text {
     height: 100vh;
   }
 
-  .form-container img {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 20px;
-  }
+.form-container img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
 
-  .form-container form-group row{
-    margin-bottom: 20px;
-  }
+.form-container form-group row{
+  margin-bottom: 20px;
+}
+
+.matrix-container {
+  display: grid;
+  width: 90vw;
+  height: 80vh;
+  grid-template-columns: 100px repeat(13, 1fr); /* 14 columns in total */
+  grid-template-rows: 40px repeat(4, 1fr); /* 5 rows in total */
+}
+
+.header-description, .column-description, .row-description, .grid-item {
+  border: 1px solid #ddd; /* Border for visibility */
+  padding: 2px; /* Padding for content */
+  text-align: center; /* Centering the text */
+}
+
+.header-description {
+  /* Styling for the top-left corner cell */
+}
+
+.column-description {
+  background-color: lightgrey; /* Different background for column descriptions */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.row-description {
+  background-color: lightblue; /* Different background for row descriptions */
+  /* Additional styles if needed */
+}
+
+.grid-item .card-image{
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  /* Styling for grid items */
+  /* You can add hover effects, different background colors, etc. */
+}
+
+.grid-item > * {
+  /* Styling for elements within each cell */
+
+}
+.grid-item[data-suit="Hearts"], .grid-item[data-suit="Diamonds"] {
+  background-color: rgba(255, 0, 0, 0.651);
+}
+
+.row-description[data-suit="Diamonds"], .row-description[data-suit="Hearts"] {
+  background-color: rgba(255, 0, 0, 0.651);
+}
+
+.row-description[data-suit="Spades"], .row-description[data-suit="Clubs"] {
+  background-color: black;
+}
