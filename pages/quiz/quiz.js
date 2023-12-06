@@ -8,17 +8,25 @@ let isCardRevealed = false;
 let notFirstCard = false
 let currentIndex = 0;
 let startTime;
+let nameField;
+let actionField; 
+let objectField;
+let cardField;
+
 
 export async function initQuiz(){
 
 
     console.log("QUIZ! QUIZ! QUIZ!");
 
-    
     const personCheckbox = document.getElementById('personCheckbox');
     const actionCheckbox = document.getElementById('actionCheckbox')
     const objectCheckbox = document.getElementById('objectCheckbox');
     const cardCheckbox = document.getElementById('cardCheckbox');
+    nameField = document.getElementById('name');
+    actionField = document.getElementById('action');
+    objectField = document.getElementById('object');
+    cardField = document.getElementById('card');
 
     // Call inital fetchCardData to fetch first record and render quiz data
     fetchCardData();
@@ -98,20 +106,22 @@ function fetchRandomCardData() {
 
 function populateCardData(card) {
     if (personCheckbox.checked){
-        document.getElementById('name').value = card.person || '';
-    } else {document.getElementById('name').value = '';}
+        nameField.value = card.person || '';
+        toggleFieldStyle(nameField, 'correct-input')
+    } else {nameField.value = '';
+            toggleFieldStyle(nameField, '');}
     
     if (actionCheckbox.checked){
-        document.getElementById('action').value = card.action || '';
-    } else {document.getElementById('action').value = '';}
+        actionField.value = card.action || '';
+    } else {actionField.value = '';}
     
     if (objectCheckbox.checked){
-        document.getElementById('object').value = card.object || ''; 
-    } else {document.getElementById('object').value = '';}
+        objectField.value = card.object || ''; 
+    } else {objectField.value = '';}
     
     if (cardCheckbox.checked){
-        document.getElementById('card').value = card.value + " of " + card.suit || '';
-    } else {document.getElementById('card').value = '';}
+        cardField.value = card.value + " of " + card.suit || '';
+    } else {cardField.value = '';}
     
     document.getElementById('current-card-image').src = card.image || '';
 }
@@ -236,40 +246,48 @@ function handleShortCuts (evt) {
 
 function checkPersonCheckBox(evt){
 
-    console.log("hello from personCheckerFunction")
-
     if (evt.target.checked){
-        document.getElementById('name').value = cardDataArray[currentIndex].person || '';
+        nameField.value = cardDataArray[currentIndex].person || '';
+        toggleFieldStyle(nameField, 'correct-input');
     } else {
         document.getElementById('name').value = '';
+        toggleFieldStyle(nameField, '');
     }
 }
 
 function checkActionCheckBox(evt){
-    console.log("hello from actionCheckerFunction");
+    
     if (evt.target.checked){
-        document.getElementById('action').value = cardDataArray[currentIndex].action || '';
+        actionField.value = cardDataArray[currentIndex].action || '';
+        toggleFieldStyle(actionField, 'correct-input');
     } else {
         document.getElementById('action').value = '';
+        toggleFieldStyle(actionField, '');
     }
 }
 
 function checkObjectCheckBox(evt){
-    console.log("hello from objectCheckerFunction");
-
+    
     if (evt.target.checked){
-        document.getElementById('object').value = cardDataArray[currentIndex].object || '';
+        objectField.value = cardDataArray[currentIndex].object || '';
+        toggleFieldStyle(objectField, 'correct-input');
     } else {
-        document.getElementById('object').value = '';
+        objectField.value = '';
+        toggleFieldStyle(objectField, '');
     }
 }
 
 function checkCardCheckBox(evt){
-    console.log("hello from cardCheckerFunction");
 
     if (evt.target.checked){
-        document.getElementById('card').value = cardDataArray[currentIndex].value + " of " + cardDataArray[currentIndex].suit || '';
+        cardField.value = cardDataArray[currentIndex].value + " of " + cardDataArray[currentIndex].suit || '';
+        toggleFieldStyle(cardField, 'correct-input');
     } else {
-        document.getElementById('card').value = '';
+        cardField.value = '';
+        toggleFieldStyle(cardField, '');
     }
 }
+
+function toggleFieldStyle(element, style){
+    element.className = 'form-control '+style;
+}  
