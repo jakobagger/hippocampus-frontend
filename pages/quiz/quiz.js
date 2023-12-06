@@ -20,12 +20,17 @@ export async function initQuiz(){
 
     // Add event listener to the 'Next' button
     document.getElementById('next-card-btn').addEventListener('click', fetchRandomCardData);
-    document.getElementById("show-card-btn").addEventListener("click", function() {isCardRevealed=true})
+    document.getElementById("show-card-btn").addEventListener("click", function() {
+        isCardRevealed=true;
+        checkAnswers(cardDataArray[currentIndex]);
+    })
     document.getElementById("play-again-btn").addEventListener("click", resetCardArrays)
     document.getElementById("save-score-btn").addEventListener("click", saveScore)
 
     //Add event listener for keystrokes
-    document.addEventListener("keydown", handleShortCuts);
+
+    //TODO: TILFØJ 
+    //document.addEventListener("keydown", handleShortCuts); 
 }
 
 async function fetchCardData() {
@@ -86,11 +91,48 @@ function fetchRandomCardData() {
 }
 
 function populateCardData(card) {
-    document.getElementById('name').value = card.person || '';
-    document.getElementById('action').value = card.action || '';
-    document.getElementById('object').value = card.object || '';
-    document.getElementById('card').value = card.value + " of " + card.suit || '';
-    document.getElementById('current-card-image').src = card.image || '';
+        document.getElementById('current-card-image').src = card.image || '';
+        document.getElementById('name').value = '';
+        document.getElementById('action').value = '';
+        document.getElementById('object').value = '';
+        document.getElementById('card').value = '';
+}
+
+function checkAnswers() {
+    const fields = [
+        {id: 'name', prop: 'person'},
+        {id: 'action', prop: 'action'},
+        {id: 'object', prop: 'object'},
+    ];
+
+    fields.forEach(field => {
+        const userInput = document.getElementById(field.id).value.trim().toLowerCase();
+        const correctAnswer = (cardDataArray[currentIndex][field.prop]).trim().toLowerCase();
+
+        console.log(`Checking ${field.id}: User input: '${userInput}', Correct answer: '${correctAnswer}'`);
+
+        if(userInput.toLowerCase() === correctAnswer.toLowerCase()) {
+            console.log("Correct!")
+            document.getElementById(field.id).style.backgroundColor = "green";
+        } else {
+            console.log("Incorrect!")
+            document.getElementById(field.id).style.backgroundColor = "red";
+        }
+    });
+
+    const cardInput = document.getElementById('card').value.trim().toLowerCase();
+    const correctCard = (card.value + " of " + card.suit || '').trim().toLowerCase();
+
+    console.log(`Checking card: User input: '${cardInput}', Correct answer: '${correctCard}'`);
+
+    if(cardInput.toLowerCase() === correctCard.toLowerCase()) {
+        console.log("Correct! fra farve if")
+        document.getElementById('card').style.backgroundColor = "green";
+    } else {
+        console.log("Incorrect!")
+        document.getElementById('card fra farve if').style.backgroundColor = "red";
+    }
+
 }
 
 function filterCorrectIncorrect() {
@@ -168,7 +210,7 @@ async function saveScore() {
             console.log(err)
         }
 }
-
+ 
 
 
 // function showTimer() {
@@ -187,13 +229,13 @@ async function saveScore() {
     
 // }
 
-function handleShortCuts (evt) {
-    if (evt.key === "n"){
-        evt.preventDefault();
-        fetchRandomCardData();
-    }
-    if (evt.key === "s"){
-        evt.preventDefault();
-        //TODO SHOW CARD
-    }
-}
+// function handleShortCuts (evt) {
+//     if (evt.key === "n"){
+//         evt.preventDefault();
+//         fetchRandomCardData();
+//     }
+//     if (evt.key === "s"){
+//         evt.preventDefault();
+//         //TODO SHOW CARD
+//     }
+// }
