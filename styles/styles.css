@@ -31,6 +31,16 @@ body, text {
   .form-container form-group row{
     margin-bottom: 20px;
   }
+
+  .correct-input {
+    background-color: green;
+    color: white;
+  }
+
+  .incorrect-input {
+    background-color: red;
+    color: white;
+  }
   
   #addMatrix {
     text-align: center;
@@ -56,3 +66,4 @@ body, text {
 .modal-content {
   background-color: black;
 }
+
