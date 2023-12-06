@@ -11,6 +11,7 @@ export async function initAddMatrix()  {
     event.preventDefault();
     combinedAdds();
     console.log("this is the end")
+    
   })
  
 }
@@ -20,6 +21,7 @@ async function combinedAdds(){
   await addSuits(matrixId);
   await addValues(matrixId);
   console.log("Do you send christmas packages")
+ window.router.navigate("userMatrix")
 }
 
 async function addMatrix() {
@@ -54,7 +56,7 @@ async function addMatrix() {
     document.getElementById("error").innerText = e.message;
   }
 
-  // window.router.navigate("addSuits")
+  
 }
 
 async function addSuits(matrixId) {
