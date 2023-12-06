@@ -93,7 +93,7 @@ function populateCardData(card) {
         document.getElementById('object').value = '';
         document.getElementById('card').value = '';
 }
-//START
+
 function checkAnswers() {
     const fields = [
         {id: 'name', prop: 'person'},
@@ -124,7 +124,7 @@ function checkAnswers() {
 
     const cardElement = document.getElementById('card');
     if (cardElement) {
-        cardElement.style.backgroundColor = console.log(cardInput == correctCard ? 'green' : 'red');
+        cardElement.style.backgroundColor = cardInput == correctCard ? 'green' : 'red';
     } else {
         console.error(`Element with id 'card' not found`);
     }

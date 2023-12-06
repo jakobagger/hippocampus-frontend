@@ -12,7 +12,7 @@ body, text {
     justify-content: center;
     height: 100vh;
     margin: 0;
-  }
+}
 
 .form-container {
     display: flex;
@@ -20,14 +20,15 @@ body, text {
     align-items: center;
     justify-content: center;
     height: 100vh;
-  }
+}
 
-  .form-container img {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 20px;
-  }
+.form-container img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
 
-  .form-container form-group row{
-    margin-bottom: 20px;
-  }
+.form-container form-group row{
+  margin-bottom: 20px;
+}
+
