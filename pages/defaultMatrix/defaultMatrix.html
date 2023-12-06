@@ -1,22 +1,32 @@
 <div class="template" id="defalt-matrix">
 
   <div class="matrix-container">
-    <div class="header-description"></div> <!-- Empty cell for the top-left corner -->
-    <div class="column-description" id="c-Ace">Ace</div>
-    <div class="column-description" id="c-2">2</div>
-    <div class="column-description" id="c-3">3</div>
-    <div class="column-description" id="c-4">4</div>
-    <div class="column-description" id="c-5">5</div>
-    <div class="column-description" id="c-6">6</div>
-    <div class="column-description" id="c-7">7</div>
-    <div class="column-description" id="c-8">8</div>
-    <div class="column-description" id="c-9">9</div>
-    <div class="column-description" id="c-10">10</div>
-    <div class="column-description" id="c-Jack">11</div>
-    <div class="column-description" id="c-Queen">12</div>
-    <div class="column-description" id="c-King">13</div>
-    <!-- More column descriptions here -->
-    <div class="row-description" data-suit="Hearts">Hearts</div>
+    <div class="empty-header-description"></div>
+    <div class="column-description" data-att="Athlete">Sport Athlete</div>
+    <div class="column-description" data-att="Movie Star">Movie Star</div>
+    <div class="column-description" data-att="Controversial">Controversial</div>
+    <div class="column-description" data-att="Brain & Beauty">Brain & Beauty</div>
+    <div class="column-description" data-att="Powerful">Powerful</div>
+    <div class="column-description" data-att="Religious">Religious</div>
+    <div class="column-description" data-att="Top Celebrity">Top Celebrity</div>
+    <div class="end-row-description"></div>
+    <div class="empty-header"></div> <!-- Empty cell for the top-left corner -->
+    <div class="column-name" id="c-Ace">Ace (M)</div>
+    <div class="column-name" id="c-2">2 (F)</div>
+    <div class="column-name" id="c-3">3 (M)</div>
+    <div class="column-name" id="c-4">4 (F)</div>
+    <div class="column-name" id="c-5">5 (M)</div>
+    <div class="column-name" id="c-6">6 (F)</div>
+    <div class="column-name" id="c-7">7 (M)</div>
+    <div class="column-name" id="c-8">8 (F)</div>
+    <div class="column-name" id="c-9">9 (M)</div>
+    <div class="column-name" id="c-10">10 (F)</div>
+    <div class="column-name" id="c-Jack">Jack (M)</div>
+    <div class="column-name" id="c-Queen">Queen (F)</div>
+    <div class="column-name" id="c-King">King (M)</div>
+    <div class="end-row-header"></div>
+    <!-- More column names here -->
+    <div class="row-name" data-suit="Hearts">&heartsuit;</div>
     <div class="grid-item" data-value="Ace" data-suit="Hearts">
       <div class="card-person"></div>
       <img class="card-image" src="" alt="">
@@ -94,8 +104,9 @@
       <img class="card-image" src="" alt="">
       <div class="card-action"></div>
       <div class="card-object"></div>
-    </div>    
-    <div class="row-description" data-suit="Spades">Spades</div>
+    </div>
+    <div class="end-row" data-suit="Hearts">Love. Great. Good. People with an itch in the body and brain</div>    
+    <div class="row-name" data-suit="Spades">&spadesuit;</div>
     <div class="grid-item" data-value="Ace" data-suit="Spades">
       <div class="card-person"></div>
       <img class="card-image" src="" alt="">
@@ -174,7 +185,8 @@
       <div class="card-action"></div>
       <div class="card-object"></div>
     </div>   
-    <div class="row-description" data-suit="Diamonds">Diamonds</div>
+    <div class="end-row" data-suit="Spades">Humorous. Absurd. People who makes you smile or wrinkle your nose</div>
+    <div class="row-name" data-suit="Diamonds">&diamondsuit;</div>
     <div class="grid-item" data-value="Ace" data-suit="Diamonds">
       <div class="card-person"></div>
       <img class="card-image" src="" alt="">
@@ -253,7 +265,8 @@
       <div class="card-action"></div>
       <div class="card-object"></div>
     </div>    
-    <div class="row-description" data-suit="Clubs">Clubs</div>
+    <div class="end-row" data-suit="Diamonds">Rich. Stylish. Blind. People who like to shine</div>
+    <div class="row-name" data-suit="Clubs">&clubsuit;</div>
     <div class="grid-item" data-value="Ace" data-suit="Clubs">
       <div class="card-person"></div>
       <img class="card-image" src="" alt="">
@@ -331,6 +344,7 @@
       <img class="card-image" src="" alt="">
       <div class="card-action"></div>
       <div class="card-object"></div>
-    </div>   
+    </div>
+    <div class="end-row" data-suit="Clubs">Cool. Serious. Crazy. People with an itch in the body or brain</div>   
 </div>
 </div>
