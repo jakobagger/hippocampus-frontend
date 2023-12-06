@@ -31,10 +31,12 @@ body, text {
   .form-container form-group row{
     margin-bottom: 20px;
   }
+  
   #addMatrix {
     text-align: center;
     margin: 0 auto;
     max-width: 600px; /* Adjust the maximum width as per your requirement */
+   
 }
 
 .form-label {
@@ -49,4 +51,8 @@ body, text {
 
 #add-matrix-btn {
     width: 50%;
+}
+
+.modal-content {
+  background-color: black;
 }

@@ -8,6 +8,7 @@ import {
 import { initLogin } from "./pages/login/login.js";
 import { initDefaultMatrix } from "./pages/defaultMatrix/defaultMatrix.js";
 import { initAddMatrix } from "./pages/addMatrix/addMatrix.js";
+import { initUserMatrix } from "./pages/userMatrix/userMatrix.js";
 import { initSignup } from "./pages/signup/signup.js";
 import { initQuiz } from "./pages/quiz/quiz.js";
 
@@ -18,6 +19,7 @@ window.addEventListener("load", async () => {
   const templateLogin = await loadHtml("./pages/login/login.html")
   const templateDefaultMatrix = await loadHtml("./pages/defaultMatrix/defaultMatrix.html")
   const templateAddMatrix = await loadHtml("./pages/addMatrix/addMatrix.html")
+  const templateUserMatrix = await loadHtml("./pages/userMatrix/userMatrix.html")
   const templateSignup = await loadHtml("./pages/signup/signup.html")
   const templateQuiz = await loadHtml("./pages/quiz/quiz.html")
   const templateAdmin = await loadHtml("./pages/admin/admin.html")
@@ -63,6 +65,10 @@ window.addEventListener("load", async () => {
       "/addMatrix": () => {
         renderHtml(templateAddMatrix, "content")
         initAddMatrix()
+      },
+      "/userMatrix": () => {
+        renderHtml(templateUserMatrix, "content")
+        initUserMatrix()
       },
         "/login": () => {
           renderHtml(templateLogin, "content");
