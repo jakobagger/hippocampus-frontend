@@ -102,15 +102,15 @@ function populateCardData(card) {
     
     if (actionCheckbox.checked){
         document.getElementById('action').value = card.action || '';
-    } else {document.getElementById('name').value = '';}
+    } else {document.getElementById('action').value = '';}
     
     if (objectCheckbox.checked){
         document.getElementById('object').value = card.object || ''; 
-    } else {document.getElementById('name').value = '';}
+    } else {document.getElementById('object').value = '';}
     
     if (cardCheckbox.checked){
         document.getElementById('card').value = card.value + " of " + card.suit || '';
-    } else {document.getElementById('name').value = '';}
+    } else {document.getElementById('card').value = '';}
     
     document.getElementById('current-card-image').src = card.image || '';
 }
