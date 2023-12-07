@@ -1,35 +1,350 @@
 <div class="template" id="defalt-matrix">
 
-  <div>
-    <table class="table table-stribed table-bordered">
-      <thead class="table-light">
-        <!-- <tr>
-          <th scope="col">Suit Description</th>
-          <th scope="col">1</th>
-          <th scope="col">2</th>
-          <th scope="col">3</th>
-          <th scope="col">4</th>
-          <th scope="col">5</th>
-          <th scope="col">6</th>
-          <th scope="col">7</th>
-          <th scope="col">8</th>
-          <th scope="col">9</th>
-          <th scope="col">10</th>
-          <th scope="col">Knight</th>
-          <th scope="col">Queen</th>
-          <th scope="col">King</th>
-          
-
-        </tr> -->
-      </thead>
-      <tbody class="table-light" id="matrix-tbl-body">
-        <tr>
-          <td class="table-light" id="suit">
-                suit
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
+  <div class="matrix-container">
+    <div class="empty-header-description"></div>
+    <div class="column-description" data-att="Athlete">Sport Athlete</div>
+    <div class="column-description" data-att="Movie Star">Movie Star</div>
+    <div class="column-description" data-att="Controversial">Controversial</div>
+    <div class="column-description" data-att="Brain & Beauty">Brain & Beauty</div>
+    <div class="column-description" data-att="Powerful">Powerful</div>
+    <div class="column-description" data-att="Religious">Religious</div>
+    <div class="column-description" data-att="Top Celebrity">Top Celebrity</div>
+    <div class="end-row-description"></div>
+    <div class="empty-header"></div> <!-- Empty cell for the top-left corner -->
+    <div class="column-name" id="c-Ace">Ace (M)</div>
+    <div class="column-name" id="c-2">2 (F)</div>
+    <div class="column-name" id="c-3">3 (M)</div>
+    <div class="column-name" id="c-4">4 (F)</div>
+    <div class="column-name" id="c-5">5 (M)</div>
+    <div class="column-name" id="c-6">6 (F)</div>
+    <div class="column-name" id="c-7">7 (M)</div>
+    <div class="column-name" id="c-8">8 (F)</div>
+    <div class="column-name" id="c-9">9 (M)</div>
+    <div class="column-name" id="c-10">10 (F)</div>
+    <div class="column-name" id="c-Jack">Jack (M)</div>
+    <div class="column-name" id="c-Queen">Queen (F)</div>
+    <div class="column-name" id="c-King">King (M)</div>
+    <div class="end-row-header"></div>
+    <!-- More column names here -->
+    <div class="row-name" data-suit="Hearts">&heartsuit;</div>
+    <div class="grid-item" data-value="Ace" data-suit="Hearts">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="2" data-suit="Hearts">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="3" data-suit="Hearts">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="4" data-suit="Hearts">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="6" data-suit="Hearts">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="5" data-suit="Hearts">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="7" data-suit="Hearts">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="8" data-suit="Hearts">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="9" data-suit="Hearts">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="10" data-suit="Hearts">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="Jack" data-suit="Hearts">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="Queen" data-suit="Hearts">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="King" data-suit="Hearts">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="end-row" data-suit="Hearts">Love. Great. Good. People with an itch in the body and brain</div>    
+    <div class="row-name" data-suit="Spades">&spadesuit;</div>
+    <div class="grid-item" data-value="Ace" data-suit="Spades">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="3" data-suit="Spades">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="2" data-suit="Spades">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="4" data-suit="Spades">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="5" data-suit="Spades">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="6" data-suit="Spades">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="7" data-suit="Spades">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="8" data-suit="Spades">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="9" data-suit="Spades">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="10" data-suit="Spades">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="Jack" data-suit="Spades">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="Queen" data-suit="Spades">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="King" data-suit="Spades">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>   
+    <div class="end-row" data-suit="Spades">Humorous. Absurd. People who makes you smile or wrinkle your nose</div>
+    <div class="row-name" data-suit="Diamonds">&diamondsuit;</div>
+    <div class="grid-item" data-value="Ace" data-suit="Diamonds">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="3" data-suit="Diamonds">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="2" data-suit="Diamonds">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="4" data-suit="Diamonds">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="5" data-suit="Diamonds">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="6" data-suit="Diamonds">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="7" data-suit="Diamonds">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="8" data-suit="Diamonds">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="9" data-suit="Diamonds">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="10" data-suit="Diamonds">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="Jack" data-suit="Diamonds">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="Queen" data-suit="Diamonds">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="King" data-suit="Diamonds">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>    
+    <div class="end-row" data-suit="Diamonds">Rich. Stylish. Blind. People who like to shine</div>
+    <div class="row-name" data-suit="Clubs">&clubsuit;</div>
+    <div class="grid-item" data-value="Ace" data-suit="Clubs">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="3" data-suit="Clubs">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="2" data-suit="Clubs">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="4" data-suit="Clubs">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="5" data-suit="Clubs">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="6" data-suit="Clubs">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="7" data-suit="Clubs">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="8" data-suit="Clubs">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="9" data-suit="Clubs">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="10" data-suit="Clubs">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="Jack" data-suit="Clubs">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="Queen" data-suit="Clubs">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="grid-item" data-value="King" data-suit="Clubs">
+      <div class="card-person"></div>
+      <img class="card-image" src="" alt="">
+      <div class="card-action"></div>
+      <div class="card-object"></div>
+    </div>
+    <div class="end-row" data-suit="Clubs">Cool. Serious. Crazy. People with an itch in the body or brain</div>   
+</div>
 </div>
