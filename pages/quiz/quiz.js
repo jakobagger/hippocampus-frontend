@@ -301,41 +301,8 @@ async function saveScore() {
         }
 }
 
-
-
-// function showTimer() {
-//     let date = new Date()
-//     let min = date.getMinutes();
-//     let sec = date.getSeconds();
-//     let mil = date.getMilliseconds();
-
-//     min = (min < 10) ? "0" + min : min;
-//     sec = (sec < 10) ? "0" + sec : sec;
-
-//     let time = min + ":" + sec + ":" + (mil/100)
-//     document.getElementById("clock-btn").innerText = time;
-//     var updateTime = setTimeout(function() {showTimer()}, 199)
-//     console.log(time)
-    
-// }
-
-
-// Jakobs gamle kode..
-
-// function handleShortCuts (evt) {
-//     if (evt.key === "n"){
-//         evt.preventDefault();
-//         fetchRandomCardData();
-//     }
-//     if (evt.key === "s"){
-//         evt.preventDefault();
-//         //TODO SHOW CARD
-//     }
-// }
-
-
 function handleShortCuts (evt) {
-    if (evt.altKey && evt.code === 'KeyN'){
+    if (evt.altKey && evt.code === 'KeyN' && document.getElementById("next-card-btn").style.display !== "none"){
         evt.preventDefault();
         document.getElementById("next-card-btn").click();
     }
