@@ -33,7 +33,10 @@ export async function initQuiz(){
 
     // Add event listener to the 'Next' button
     document.getElementById('next-card-btn').addEventListener('click', fetchRandomCardData);
-    document.getElementById("show-card-btn").addEventListener("click", function() {isCardRevealed=true})
+    // Add event listener to the 'Show' button
+    document.getElementById("show-card-btn").addEventListener("click", function() {
+        checkAnswers(cardDataArray[currentIndex]);
+    })
     document.getElementById("play-again-btn").addEventListener("click", resetCardArrays)
     document.getElementById("save-score-btn").addEventListener("click", saveScore)
 
@@ -45,6 +48,7 @@ export async function initQuiz(){
     actionCheckbox.addEventListener('change', checkActionCheckBox);
     objectCheckbox.addEventListener('change', checkObjectCheckBox);
     cardCheckbox.addEventListener('change', checkCardCheckBox);
+
 }
 
 async function fetchCardData() {
@@ -105,7 +109,7 @@ function fetchRandomCardData() {
 }
 
 function populateCardData(card) {
-    if (personCheckbox.checked){
+      if (personCheckbox.checked){
         nameField.value = card.person || '';
         toggleFieldStyle(nameField, 'correct-input')
     } else {nameField.value = '';
@@ -124,6 +128,101 @@ function populateCardData(card) {
     } else {cardField.value = '';}
     
     document.getElementById('current-card-image').src = card.image || '';
+}
+
+const shortHandMapping = {
+    'd1': 'ace of diamonds',
+    'd2': '2 of diamonds',
+    'd3': '3 of diamonds',
+    'd4': '4 of diamonds',
+    'd5': '5 of diamonds',
+    'd6': '6 of diamonds',
+    'd7': '7 of diamonds',
+    'd8': '8 of diamonds',
+    'd9': '9 of diamonds',
+    'd10': '10 of diamonds',
+    'd11': 'jack of diamonds',
+    'd12': 'queen of diamonds',
+    'd13': 'king of diamonds',
+    'h1': 'ace of hearts',
+    'h2': '2 of hearts',
+    'h3': '3 of hearts',
+    'h4': '4 of hearts',
+    'h5': '5 of hearts',
+    'h6': '6 of hearts',
+    'h7': '7 of hearts',
+    'h8': '8 of hearts',
+    'h9': '9 of hearts',
+    'h10': '10 of hearts',
+    'h11': 'jack of hearts',
+    'h12': 'queen of hearts',
+    'h13': 'king of hearts',
+    'c1': 'ace of clubs',
+    'c2': '2 of clubs',
+    'c3': '3 of clubs',
+    'c4': '4 of clubs',
+    'c5': '5 of clubs',
+    'c6': '6 of clubs',
+    'c7': '7 of clubs',
+    'c8': '8 of clubs',
+    'c9': '9 of clubs',
+    'c10': '10 of clubs',
+    'c11': 'jack of clubs',
+    'c12': 'queen of clubs',
+    'c13': 'king of clubs',
+    's1': 'ace of spades',
+    's2': '2 of spades',
+    's3': '3 of spades',
+    's4': '4 of spades',
+    's5': '5 of spades',
+    's6': '6 of spades',
+    's7': '7 of spades',
+    's8': '8 of spades',
+    's9': '9 of spades',
+    's10': '10 of spades',
+    's11': 'jack of spades',
+    's12': 'queen of spades',
+    's13': 'king of spades',    
+}
+
+
+function checkAnswers() {
+    const fields = [
+        {id: 'name', prop: 'person'},
+        {id: 'action', prop: 'action'},
+        {id: 'object', prop: 'object'},
+    ];
+
+    fields.forEach(field => {
+        const userInput = document.getElementById(field.id).value.trim().toLowerCase();
+        const correctAnswer = (cardDataArray[currentIndex][field.prop] || '').trim().toLowerCase();
+
+        console.log(`Checking ${field.id}: User input: '${userInput}', Correct answer: '${correctAnswer}'`);
+
+        const element = document.getElementById(field.id);
+        if (element) {
+            element.style.backgroundColor = (userInput == correctAnswer ? 'green' : 'red');
+            element.value = correctAnswer;
+        } else {
+            console.error(`Element with id '${field.id}' not found`);
+        }
+    });
+
+    const cardInput = document.getElementById('card').value.trim().toLowerCase();
+    const cardValue = (cardDataArray[currentIndex]['value'] || '').trim().toLowerCase();
+    const cardSuit = (cardDataArray[currentIndex]['suit'] || '').trim().toLowerCase();
+    const correctCard = `${cardValue} of ${cardSuit}`
+    const shorthandCard = shortHandMapping[cardInput] || '';
+
+    console.log(`Checking card: User input: '${cardInput}', Correct answer: '${correctCard}'`);
+
+    const cardElement = document.getElementById('card');
+    if (cardElement) {
+        cardElement.style.backgroundColor = (cardInput === correctCard || cardInput === shorthandCard) ? 'green' : 'red';
+        cardElement.value = correctCard;
+    } else {
+        console.error(`Element with id 'card' not found`);
+    }
 }
 
 function filterCorrectIncorrect() {
@@ -220,6 +319,21 @@ async function saveScore() {
     
 // }
 
+
+// Jakobs gamle kode..
+
+// function handleShortCuts (evt) {
+//     if (evt.key === "n"){
+//         evt.preventDefault();
+//         fetchRandomCardData();
+//     }
+//     if (evt.key === "s"){
+//         evt.preventDefault();
+//         //TODO SHOW CARD
+//     }
+// }
+
+
 function handleShortCuts (evt) {
     if (evt.shiftKey && evt.code === 'KeyN'){
         evt.preventDefault();
@@ -241,7 +355,6 @@ function handleShortCuts (evt) {
     if (evt.altKey && evt.code === 'KeyC'){
         document.getElementById("card").focus();
     }
-
 }
 
 function checkPersonCheckBox(evt){
