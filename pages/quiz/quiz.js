@@ -335,11 +335,11 @@ async function saveScore() {
 
 
 function handleShortCuts (evt) {
-    if (evt.shiftKey && evt.code === 'KeyN'){
+    if (evt.altKey && evt.code === 'KeyN'){
         evt.preventDefault();
         document.getElementById("next-card-btn").click();
     }
-    if (evt.shiftKey && evt.code === 'KeyS'){
+    if (evt.altKey && evt.code === 'KeyS'){
         evt.preventDefault();
         document.getElementById("show-card-btn").click();
     }
