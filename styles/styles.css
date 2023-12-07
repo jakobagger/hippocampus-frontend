@@ -139,6 +139,7 @@ body {
   border: 1px solid white;
   text-align: center;
   padding: 1px;
+  color: white;
 }
 
 .end-row[data-suit="Diamonds"], .end-row[data-suit="Hearts"] {
@@ -155,38 +156,39 @@ body {
   border: 1px solid #ddd;
   border-bottom: none;
   text-align: center;
+  color: white;
 }
 
-.column-description[data-att="Athlete"] {
+.column-description[data-att="Ace-2"] {
   grid-column-start: 2; 
   grid-column: span 2;
   background-color: green
 }
 
 
-.column-description[data-att="Movie Star"] {
+.column-description[data-att="3-4"] {
   background-color: cornflowerblue;
 }
 
-.column-description[data-att="Controversial"] {
+.column-description[data-att="5-6"] {
   background-color: darkgrey;
   
 }
 
-.column-description[data-att="Brain & Beauty"] {
+.column-description[data-att="7-8"] {
   background-color: darkorange;
 }
 
-.column-description[data-att="Religious"] {
+.column-description[data-att="Jack"] {
   grid-column: span 1; /* Override to span only 1 column */
   background-color: rgba(169, 169, 169, 0.473);
 }
 
-.column-description[data-att="Powerful"] {
+.column-description[data-att="9-10"] {
   background-color: purple;
 }
 
-.column-description[data-att="Top Celebrity"] {
+.column-description[data-att="Queen-King"] {
   background-color: darkgoldenrod;
 }
 
@@ -194,6 +196,7 @@ body {
   border: 1px solid #ddd; /* Border for visibility */
   padding: 2px; /* Padding for content */
   text-align: center; /* Centering the text */
+  color: white;
 }
 
 
@@ -203,11 +206,8 @@ body {
   word-wrap: break-word;
   overflow-wrap: break-word;
   border-right: dotted grey;
-  border-left: none;
-}
-
-.column-name: {
   border-left: 1px solid white;
+  
 }
 
 .row-name {
@@ -217,6 +217,7 @@ body {
   font-size: 50px;
   justify-content: center;
   align-items: center;
+  color: white;
 }
 
 .grid-item {
@@ -228,6 +229,7 @@ body {
   text-align: center;
   align-content: stretch;
   border-bottom: 1px solid rgb(226, 220, 220);
+  color: white;
   
 }
 
