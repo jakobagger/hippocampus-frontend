@@ -8,12 +8,25 @@ let isCardRevealed = false;
 let notFirstCard = false
 let currentIndex = 0;
 let startTime;
-let time;
+let nameField;
+let actionField; 
+let objectField;
+let cardField;
+
 
 export async function initQuiz(){
 
 
     console.log("QUIZ! QUIZ! QUIZ!");
+
+    const personCheckbox = document.getElementById('personCheckbox');
+    const actionCheckbox = document.getElementById('actionCheckbox')
+    const objectCheckbox = document.getElementById('objectCheckbox');
+    const cardCheckbox = document.getElementById('cardCheckbox');
+    nameField = document.getElementById('name');
+    actionField = document.getElementById('action');
+    objectField = document.getElementById('object');
+    cardField = document.getElementById('card');
 
     // Call inital fetchCardData to fetch first record and render quiz data
     fetchCardData();
@@ -26,6 +39,12 @@ export async function initQuiz(){
 
     //Add event listener for keystrokes
     document.addEventListener("keydown", handleShortCuts);
+
+    //Add event listeners to checkboxes
+    personCheckbox.addEventListener('change', checkPersonCheckBox);
+    actionCheckbox.addEventListener('change', checkActionCheckBox);
+    objectCheckbox.addEventListener('change', checkObjectCheckBox);
+    cardCheckbox.addEventListener('change', checkCardCheckBox);
 }
 
 async function fetchCardData() {
@@ -86,10 +105,24 @@ function fetchRandomCardData() {
 }
 
 function populateCardData(card) {
-    document.getElementById('name').value = card.person || '';
-    document.getElementById('action').value = card.action || '';
-    document.getElementById('object').value = card.object || '';
-    document.getElementById('card').value = card.value + " of " + card.suit || '';
+    if (personCheckbox.checked){
+        nameField.value = card.person || '';
+        toggleFieldStyle(nameField, 'correct-input')
+    } else {nameField.value = '';
+            toggleFieldStyle(nameField, '');}
+    
+    if (actionCheckbox.checked){
+        actionField.value = card.action || '';
+    } else {actionField.value = '';}
+    
+    if (objectCheckbox.checked){
+        objectField.value = card.object || ''; 
+    } else {objectField.value = '';}
+    
+    if (cardCheckbox.checked){
+        cardField.value = card.value + " of " + card.suit || '';
+    } else {cardField.value = '';}
+    
     document.getElementById('current-card-image').src = card.image || '';
 }
 
@@ -188,12 +221,73 @@ async function saveScore() {
 // }
 
 function handleShortCuts (evt) {
-    if (evt.key === "n"){
+    if (evt.shiftKey && evt.code === 'KeyN'){
         evt.preventDefault();
-        fetchRandomCardData();
+        document.getElementById("next-card-btn").click();
     }
-    if (evt.key === "s"){
+    if (evt.shiftKey && evt.code === 'KeyS'){
         evt.preventDefault();
-        //TODO SHOW CARD
+        document.getElementById("show-card-btn").click();
+    }
+    if (evt.altKey && evt.code === 'KeyP'){
+        document.getElementById("person").focus();
+    }
+    if (evt.altKey && evt.code === 'KeyA'){
+        document.getElementById("action").focus();
+    }
+    if (evt.altKey && evt.code === 'KeyO'){
+        document.getElementById("object").focus();
+    }
+    if (evt.altKey && evt.code === 'KeyC'){
+        document.getElementById("card").focus();
+    }
+
+}
+
+function checkPersonCheckBox(evt){
+
+    if (evt.target.checked){
+        nameField.value = cardDataArray[currentIndex].person || '';
+        toggleFieldStyle(nameField, 'correct-input');
+    } else {
+        document.getElementById('name').value = '';
+        toggleFieldStyle(nameField, '');
     }
 }
+
+function checkActionCheckBox(evt){
+    
+    if (evt.target.checked){
+        actionField.value = cardDataArray[currentIndex].action || '';
+        toggleFieldStyle(actionField, 'correct-input');
+    } else {
+        document.getElementById('action').value = '';
+        toggleFieldStyle(actionField, '');
+    }
+}
+
+function checkObjectCheckBox(evt){
+    
+    if (evt.target.checked){
+        objectField.value = cardDataArray[currentIndex].object || '';
+        toggleFieldStyle(objectField, 'correct-input');
+    } else {
+        objectField.value = '';
+        toggleFieldStyle(objectField, '');
+    }
+}
+
+function checkCardCheckBox(evt){
+
+    if (evt.target.checked){
+        cardField.value = cardDataArray[currentIndex].value + " of " + cardDataArray[currentIndex].suit || '';
+        toggleFieldStyle(cardField, 'correct-input');
+    } else {
+        cardField.value = '';
+        toggleFieldStyle(cardField, '');
+    }
+}
+
+function toggleFieldStyle(element, style){
+    element.className = 'form-control '+style;
+}  
