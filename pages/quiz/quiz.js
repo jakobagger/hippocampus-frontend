@@ -5,7 +5,6 @@ let unchangedArray = []
 let correctGuesses = [];
 let incorrectGuesses = [];
 let isCardRevealed = false;
-let notFirstCard = false
 let currentIndex = 0;
 let startTime;
 let nameField;
@@ -51,7 +50,6 @@ export async function initQuiz(){
     cardCheckbox.addEventListener('change', checkCardCheckBox);
     isInitialized = true;
     }
-    console.log(cardDataArray.length)
 }
 
 async function fetchCardData() {
@@ -66,8 +64,14 @@ async function fetchCardData() {
         unchangedArray.push(...cardDataArray);
 
         if (cardDataArray.length > 0) {
-            console.log(cardDataArray.length)
-            populateCardData(cardDataArray[0]); // First record
+            console.log("Card data array after fetch:", cardDataArray);
+            console.log("Length of cardDataArray:", cardDataArray.length);
+            const randomIndex = Math.floor(Math.random() * cardDataArray.length);
+            console.log("Random index:", randomIndex);
+            console.log("Card at random index:", cardDataArray[randomIndex]);
+        
+            populateCardData(cardDataArray[randomIndex]);
+            currentIndex = randomIndex;
         } else {
             console.log('No records found in the response');
         }
@@ -81,9 +85,11 @@ async function fetchCardData() {
 function fetchRandomCardData() {
     resetFieldStyles();
     console.log(cardDataArray.length)
-    if(notFirstCard) {
-        filterCorrectIncorrect()
-        }      
+    console.log(correctGuesses.length)
+
+    filterCorrectIncorrect() 
+    console.log(cardDataArray.length)
+    console.log(correctGuesses.length)     
     let endTime = Date.now();
     let time = (endTime-startTime)/1000;
     document.getElementById("timer-badge").innerText = time
@@ -94,10 +100,11 @@ function fetchRandomCardData() {
     if (cardDataArray && cardDataArray.length > 0) {
         console.log(cardDataArray.length)
         const randomIndex = Math.floor(Math.random() * cardDataArray.length);
-        populateCardData(cardDataArray[randomIndex]); // Using global array
+        console.log("Random index:", randomIndex);
+        console.log("Card at random index:", cardDataArray[randomIndex]);
+    
+        populateCardData(cardDataArray[randomIndex]);
         currentIndex = randomIndex;
-        console.log("current " + currentIndex + "  random " + randomIndex)
-
     } else {
         showScore(time)
         toggleDisplayStyle("next-card-btn");
@@ -109,10 +116,11 @@ function fetchRandomCardData() {
     console.log("incorrect: " + incorrectGuesses.length)
  
     isCardRevealed = false;
-    notFirstCard = true;
 }
 
 function populateCardData(card) {
+    console.log("Populating card data for:", card);
+    console.log(cardDataArray.length)
       if (personCheckbox.checked){
         nameField.value = card.person || '';
         toggleFieldStyle(nameField, 'correct-input')
@@ -121,17 +129,21 @@ function populateCardData(card) {
     
     if (actionCheckbox.checked){
         actionField.value = card.action || '';
+        toggleFieldStyle(actionField, 'correct-input')
     } else {actionField.value = '';}
     
     if (objectCheckbox.checked){
-        objectField.value = card.object || ''; 
+        objectField.value = card.object || '';
+        toggleFieldStyle(objectField, 'correct-input') 
     } else {objectField.value = '';}
     
     if (cardCheckbox.checked){
         cardField.value = card.value + " of " + card.suit || '';
+        toggleFieldStyle(cardField, 'correct-input')
     } else {cardField.value = '';}
     
     document.getElementById('current-card-image').src = card.image || '';
+
 }
 
 const shortHandMapping = {
@@ -255,7 +267,6 @@ function resetCardArrays() {
     incorrectGuesses.length = 0;
     toggleDisplayStyle("next-card-btn");
     toggleDisplayStyle("play-again-btn");
-    notFirstCard = false;
     startTime = Date.now()
     fetchRandomCardData()
     document.getElementById("next-card-btn").innerText = "Next";
