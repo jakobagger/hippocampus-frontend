@@ -12,10 +12,10 @@ let nameField;
 let actionField; 
 let objectField;
 let cardField;
-
+let isInitialized = false
 
 export async function initQuiz(){
-
+    
 
     console.log("QUIZ! QUIZ! QUIZ!");
 
@@ -29,8 +29,9 @@ export async function initQuiz(){
     cardField = document.getElementById('card');
 
     // Call inital fetchCardData to fetch first record and render quiz data
-    fetchCardData();
-
+    
+    if(!isInitialized) {
+        fetchCardData();
     // Add event listener to the 'Next' button
     document.getElementById('next-card-btn').addEventListener('click', fetchRandomCardData);
     // Add event listener to the 'Show' button
@@ -48,11 +49,12 @@ export async function initQuiz(){
     actionCheckbox.addEventListener('change', checkActionCheckBox);
     objectCheckbox.addEventListener('change', checkObjectCheckBox);
     cardCheckbox.addEventListener('change', checkCardCheckBox);
-
+    isInitialized = true;
+    }
+    console.log(cardDataArray.length)
 }
 
 async function fetchCardData() {
-
     try {
         const response = await fetch(`${API_URL}/quiz`);
         if (!response.ok) {
@@ -77,6 +79,7 @@ async function fetchCardData() {
 }
 
 function fetchRandomCardData() {
+    console.log(cardDataArray.length)
     if(notFirstCard) {
         filterCorrectIncorrect()
         }      
@@ -210,20 +213,15 @@ function checkAnswers() {
     });
 
     const cardInput = document.getElementById('card').value.trim().toLowerCase();
-    console.log(cardInput)
     const correctCardvalue = (cardDataArray[currentIndex]['value'] || '').trim().toLowerCase();
-    console.log(correctCardvalue)
     const correctCardSuit = (cardDataArray[currentIndex]['suit'] || '').trim().toLowerCase();
-    console.log(correctCardSuit)
     const correctCard = `${correctCardvalue} of ${correctCardSuit}`;
-    console.log(correctCard)
     const shorthandCard = shortHandMapping[cardInput] || '';
-
     console.log(`Checking card: User input: '${cardInput}', Correct answer: '${correctCard}'`);
 
     const cardElement = document.getElementById('card');
     if (cardElement) {
-        cardElement.style.backgroundColor = (cardInput === correctCard) ? 'green' : 'red';
+        cardElement.style.backgroundColor = (cardInput === correctCard || shorthandCard === correctCard) ? 'green' : 'red';
         cardElement.value = correctCard;
     } else {
         console.error(`Element with id 'card' not found`);
