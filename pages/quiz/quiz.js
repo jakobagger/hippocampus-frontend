@@ -210,20 +210,16 @@ function checkAnswers() {
     });
 
     const cardInput = document.getElementById('card').value.trim().toLowerCase();
-    console.log(cardInput)
     const correctCardvalue = (cardDataArray[currentIndex]['value'] || '').trim().toLowerCase();
-    console.log(correctCardvalue)
     const correctCardSuit = (cardDataArray[currentIndex]['suit'] || '').trim().toLowerCase();
-    console.log(correctCardSuit)
     const correctCard = `${correctCardvalue} of ${correctCardSuit}`;
-    console.log(correctCard)
     const shorthandCard = shortHandMapping[cardInput] || '';
 
     console.log(`Checking card: User input: '${cardInput}', Correct answer: '${correctCard}'`);
 
     const cardElement = document.getElementById('card');
     if (cardElement) {
-        cardElement.style.backgroundColor = (cardInput === correctCard) ? 'green' : 'red';
+        cardElement.style.backgroundColor = (cardInput === correctCard || shorthandCard === correctCard) ? 'green' : 'red';
         cardElement.value = correctCard;
     } else {
         console.error(`Element with id 'card' not found`);
