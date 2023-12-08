@@ -79,6 +79,7 @@ async function fetchCardData() {
 }
 
 function fetchRandomCardData() {
+    resetFieldStyles();
     console.log(cardDataArray.length)
     if(notFirstCard) {
         filterCorrectIncorrect()
@@ -108,8 +109,7 @@ function fetchRandomCardData() {
     console.log("incorrect: " + incorrectGuesses.length)
  
     isCardRevealed = false;
-    notFirstCard = true
-    toggleFieldBackgroundcolor()
+    notFirstCard = true;
 }
 
 function populateCardData(card) {
@@ -225,19 +225,6 @@ function checkAnswers() {
         cardElement.value = correctCard;
     } else {
         console.error(`Element with id 'card' not found`);
-    }
-}
-
-function toggleFieldBackgroundcolor() {
-    let personBgColor = document.getElementById("name").style.backgroundColor;
-    let actionBgColor = document.getElementById("action").style.backgroundColor;
-    let objectBgColor = document.getElementById("object").style.backgroundColor;
-    let cardBgColor = document.getElementById("card").style.backgroundColor;
-    if(personBgColor != "white" || actionBgColor != "white" || objectBgColor != "white" || cardBgColor != "white"){
-        document.getElementById("name").style.backgroundColor = "white";
-        document.getElementById("action").style.backgroundColor = "white";
-        document.getElementById("object").style.backgroundColor = "white";
-        document.getElementById("card").style.backgroundColor = "white";
     }
 }
 
@@ -387,3 +374,24 @@ function checkCardCheckBox(evt){
 function toggleFieldStyle(element, style){
     element.className = 'form-control '+style;
 }  
+
+function resetFieldStyles() {
+
+    if (!personCheckbox.checked) {
+        resetFieldStyle(nameField);
+    }
+    if (!actionCheckbox.checked) {
+        resetFieldStyle(actionField);
+    }
+    if (!objectCheckbox.checked) {
+        resetFieldStyle(objectField);
+    }
+    if (!cardCheckbox.checked) {
+        resetFieldStyle(cardField);
+    }
+}
+
+function resetFieldStyle(field) {
+    field.style.backgroundColor = 'white';
+    toggleFieldStyle(field, '');
+}
