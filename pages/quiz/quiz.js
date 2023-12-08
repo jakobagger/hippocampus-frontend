@@ -371,6 +371,7 @@ function checkObjectCheckBox(evt){
     }
 }
 
+
 function checkCardCheckBox(evt){
 
     if (evt.target.checked){
@@ -387,7 +388,6 @@ function toggleFieldStyle(element, style){
 }  
 
 function resetFieldStyles() {
-
     if (!personCheckbox.checked) {
         resetFieldStyle(nameField);
     }
