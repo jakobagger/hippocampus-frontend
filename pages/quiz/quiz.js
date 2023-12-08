@@ -106,6 +106,7 @@ function fetchRandomCardData() {
  
     isCardRevealed = false;
     notFirstCard = true
+    toggleFieldBackgroundcolor()
 }
 
 function populateCardData(card) {
@@ -209,19 +210,36 @@ function checkAnswers() {
     });
 
     const cardInput = document.getElementById('card').value.trim().toLowerCase();
-    const cardValue = (cardDataArray[currentIndex]['value'] || '').trim().toLowerCase();
-    const cardSuit = (cardDataArray[currentIndex]['suit'] || '').trim().toLowerCase();
-    const correctCard = `${cardValue} of ${cardSuit}`
+    console.log(cardInput)
+    const correctCardvalue = (cardDataArray[currentIndex]['value'] || '').trim().toLowerCase();
+    console.log(correctCardvalue)
+    const correctCardSuit = (cardDataArray[currentIndex]['suit'] || '').trim().toLowerCase();
+    console.log(correctCardSuit)
+    const correctCard = `${correctCardvalue} of ${correctCardSuit}`;
+    console.log(correctCard)
     const shorthandCard = shortHandMapping[cardInput] || '';
 
     console.log(`Checking card: User input: '${cardInput}', Correct answer: '${correctCard}'`);
 
     const cardElement = document.getElementById('card');
     if (cardElement) {
-        cardElement.style.backgroundColor = (cardInput === correctCard || cardInput === shorthandCard) ? 'green' : 'red';
+        cardElement.style.backgroundColor = (cardInput === correctCard) ? 'green' : 'red';
         cardElement.value = correctCard;
     } else {
         console.error(`Element with id 'card' not found`);
+    }
+}
+
+function toggleFieldBackgroundcolor() {
+    let personBgColor = document.getElementById("name").style.backgroundColor;
+    let actionBgColor = document.getElementById("action").style.backgroundColor;
+    let objectBgColor = document.getElementById("object").style.backgroundColor;
+    let cardBgColor = document.getElementById("card").style.backgroundColor;
+    if(personBgColor != "white" || actionBgColor != "white" || objectBgColor != "white" || cardBgColor != "white"){
+        document.getElementById("name").style.backgroundColor = "white";
+        document.getElementById("action").style.backgroundColor = "white";
+        document.getElementById("object").style.backgroundColor = "white";
+        document.getElementById("card").style.backgroundColor = "white";
     }
 }
 
