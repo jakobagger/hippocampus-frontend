@@ -221,7 +221,7 @@ function checkAnswers() {
 
     const cardElement = document.getElementById('card');
     if (cardElement) {
-        cardElement.style.backgroundColor = (cardInput === correctCard || shorthandCard === correctCard) ? 'green' : 'red';
+        cardElement.style.backgroundColor = (cardInput === correctCard || shorthandCard === correctCard) ? toggleFieldStyle(cardField, 'correct-input') : toggleFieldStyle(cardField, 'incorrect-input');
         cardElement.value = correctCard;
     } else {
         console.error(`Element with id 'card' not found`);
