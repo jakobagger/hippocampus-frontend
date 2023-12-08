@@ -5,17 +5,16 @@ let unchangedArray = []
 let correctGuesses = [];
 let incorrectGuesses = [];
 let isCardRevealed = false;
-let notFirstCard = false
 let currentIndex = 0;
 let startTime;
 let nameField;
 let actionField; 
 let objectField;
 let cardField;
-
+let isInitialized = false
 
 export async function initQuiz(){
-
+    
 
     console.log("QUIZ! QUIZ! QUIZ!");
 
@@ -29,8 +28,9 @@ export async function initQuiz(){
     cardField = document.getElementById('card');
 
     // Call inital fetchCardData to fetch first record and render quiz data
-    fetchCardData();
-
+    
+    if(!isInitialized) {
+        fetchCardData();
     // Add event listener to the 'Next' button
     document.getElementById('next-card-btn').addEventListener('click', fetchRandomCardData);
     // Add event listener to the 'Show' button
@@ -48,11 +48,11 @@ export async function initQuiz(){
     actionCheckbox.addEventListener('change', checkActionCheckBox);
     objectCheckbox.addEventListener('change', checkObjectCheckBox);
     cardCheckbox.addEventListener('change', checkCardCheckBox);
-
+    isInitialized = true;
+    }
 }
 
 async function fetchCardData() {
-
     try {
         const response = await fetch(`${API_URL}/quiz`);
         if (!response.ok) {
@@ -64,8 +64,14 @@ async function fetchCardData() {
         unchangedArray.push(...cardDataArray);
 
         if (cardDataArray.length > 0) {
-            console.log(cardDataArray.length)
-            populateCardData(cardDataArray[0]); // First record
+            console.log("Card data array after fetch:", cardDataArray);
+            console.log("Length of cardDataArray:", cardDataArray.length);
+            const randomIndex = Math.floor(Math.random() * cardDataArray.length);
+            console.log("Random index:", randomIndex);
+            console.log("Card at random index:", cardDataArray[randomIndex]);
+        
+            populateCardData(cardDataArray[randomIndex]);
+            currentIndex = randomIndex;
         } else {
             console.log('No records found in the response');
         }
@@ -77,9 +83,13 @@ async function fetchCardData() {
 }
 
 function fetchRandomCardData() {
-    if(notFirstCard) {
-        filterCorrectIncorrect()
-        }      
+    resetFieldStyles();
+    console.log(cardDataArray.length)
+    console.log(correctGuesses.length)
+
+    filterCorrectIncorrect() 
+    console.log(cardDataArray.length)
+    console.log(correctGuesses.length)     
     let endTime = Date.now();
     let time = (endTime-startTime)/1000;
     document.getElementById("timer-badge").innerText = time
@@ -90,10 +100,11 @@ function fetchRandomCardData() {
     if (cardDataArray && cardDataArray.length > 0) {
         console.log(cardDataArray.length)
         const randomIndex = Math.floor(Math.random() * cardDataArray.length);
-        populateCardData(cardDataArray[randomIndex]); // Using global array
+        console.log("Random index:", randomIndex);
+        console.log("Card at random index:", cardDataArray[randomIndex]);
+    
+        populateCardData(cardDataArray[randomIndex]);
         currentIndex = randomIndex;
-        console.log("current " + currentIndex + "  random " + randomIndex)
-
     } else {
         showScore(time)
         toggleDisplayStyle("next-card-btn");
@@ -105,10 +116,11 @@ function fetchRandomCardData() {
     console.log("incorrect: " + incorrectGuesses.length)
  
     isCardRevealed = false;
-    notFirstCard = true
 }
 
 function populateCardData(card) {
+    console.log("Populating card data for:", card);
+    console.log(cardDataArray.length)
       if (personCheckbox.checked){
         nameField.value = card.person || '';
         toggleFieldStyle(nameField, 'correct-input')
@@ -117,17 +129,21 @@ function populateCardData(card) {
     
     if (actionCheckbox.checked){
         actionField.value = card.action || '';
+        toggleFieldStyle(actionField, 'correct-input')
     } else {actionField.value = '';}
     
     if (objectCheckbox.checked){
-        objectField.value = card.object || ''; 
+        objectField.value = card.object || '';
+        toggleFieldStyle(objectField, 'correct-input') 
     } else {objectField.value = '';}
     
     if (cardCheckbox.checked){
         cardField.value = card.value + " of " + card.suit || '';
+        toggleFieldStyle(cardField, 'correct-input')
     } else {cardField.value = '';}
     
     document.getElementById('current-card-image').src = card.image || '';
+
 }
 
 const shortHandMapping = {
@@ -209,16 +225,15 @@ function checkAnswers() {
     });
 
     const cardInput = document.getElementById('card').value.trim().toLowerCase();
-    const cardValue = (cardDataArray[currentIndex]['value'] || '').trim().toLowerCase();
-    const cardSuit = (cardDataArray[currentIndex]['suit'] || '').trim().toLowerCase();
-    const correctCard = `${cardValue} of ${cardSuit}`
+    const correctCardvalue = (cardDataArray[currentIndex]['value'] || '').trim().toLowerCase();
+    const correctCardSuit = (cardDataArray[currentIndex]['suit'] || '').trim().toLowerCase();
+    const correctCard = `${correctCardvalue} of ${correctCardSuit}`;
     const shorthandCard = shortHandMapping[cardInput] || '';
-
     console.log(`Checking card: User input: '${cardInput}', Correct answer: '${correctCard}'`);
 
     const cardElement = document.getElementById('card');
     if (cardElement) {
-        cardElement.style.backgroundColor = (cardInput === correctCard || cardInput === shorthandCard) ? 'green' : 'red';
+        cardElement.style.backgroundColor = (cardInput === correctCard || shorthandCard === correctCard) ? toggleFieldStyle(cardField, 'correct-input') : toggleFieldStyle(cardField, 'incorrect-input');
         cardElement.value = correctCard;
     } else {
         console.error(`Element with id 'card' not found`);
@@ -252,7 +267,6 @@ function resetCardArrays() {
     incorrectGuesses.length = 0;
     toggleDisplayStyle("next-card-btn");
     toggleDisplayStyle("play-again-btn");
-    notFirstCard = false;
     startTime = Date.now()
     fetchRandomCardData()
     document.getElementById("next-card-btn").innerText = "Next";
@@ -301,41 +315,8 @@ async function saveScore() {
         }
 }
 
-
-
-// function showTimer() {
-//     let date = new Date()
-//     let min = date.getMinutes();
-//     let sec = date.getSeconds();
-//     let mil = date.getMilliseconds();
-
-//     min = (min < 10) ? "0" + min : min;
-//     sec = (sec < 10) ? "0" + sec : sec;
-
-//     let time = min + ":" + sec + ":" + (mil/100)
-//     document.getElementById("clock-btn").innerText = time;
-//     var updateTime = setTimeout(function() {showTimer()}, 199)
-//     console.log(time)
-    
-// }
-
-
-// Jakobs gamle kode..
-
-// function handleShortCuts (evt) {
-//     if (evt.key === "n"){
-//         evt.preventDefault();
-//         fetchRandomCardData();
-//     }
-//     if (evt.key === "s"){
-//         evt.preventDefault();
-//         //TODO SHOW CARD
-//     }
-// }
-
-
 function handleShortCuts (evt) {
-    if (evt.altKey && evt.code === 'KeyN'){
+    if (evt.altKey && evt.code === 'KeyN' && document.getElementById("next-card-btn").style.display !== "none"){
         evt.preventDefault();
         document.getElementById("next-card-btn").click();
     }
@@ -404,3 +385,24 @@ function checkCardCheckBox(evt){
 function toggleFieldStyle(element, style){
     element.className = 'form-control '+style;
 }  
+
+function resetFieldStyles() {
+
+    if (!personCheckbox.checked) {
+        resetFieldStyle(nameField);
+    }
+    if (!actionCheckbox.checked) {
+        resetFieldStyle(actionField);
+    }
+    if (!objectCheckbox.checked) {
+        resetFieldStyle(objectField);
+    }
+    if (!cardCheckbox.checked) {
+        resetFieldStyle(cardField);
+    }
+}
+
+function resetFieldStyle(field) {
+    field.style.backgroundColor = 'white';
+    toggleFieldStyle(field, '');
+}
