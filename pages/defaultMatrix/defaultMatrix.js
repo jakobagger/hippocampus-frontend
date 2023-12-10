@@ -1,57 +1,77 @@
 import {API_URL} from "../../settings.js"
-const URL = API_URL + "/matrix"
+const URL = API_URL + "/matrix/default"
 
 import { sanitizeStringWithTableRows } from "../../utils.js"
 
 export async function initDefaultMatrix(){
-  console.log("got you")
-  getAndRenderMatrix();
+  
+  getMatrixData();
+
 }
 
 
-async function getAndRenderMatrix(){
+async function getMatrixData(){
   try {
     const matrixFromServer = await fetch(URL).then(res => res.json())
-    renderMatrixData(matrixFromServer)
-    console.log("got it")
+    const matrixCards = matrixFromServer.cards
+    const matrixSuits = matrixFromServer.suits
+    const matrixValues = matrixFromServer.values
+    renderMatrixValues(matrixValues)
+    renderMatrixSuits(matrixSuits)
+    renderMatrixData(matrixCards)
+    
   } catch (e){
     console.log("Errot fetching matrix " + e)
   }
 }
 
+function renderMatrixValues(data) {
+  const columnDivs = document.querySelectorAll("div[data-att]")
+  data.forEach(value => {
+      let valueName = value.valueName;
+
+      columnDivs.forEach(div => {
+        if(div.getAttribute("data-att").includes(valueName)) {
+          div.textContent = value.valueDescription
+        }
+      })
+
+      
+  })
+
+}
+
+function renderMatrixSuits(data) {
+
+  data.forEach(suit => {
+    let suitSelector = `.end-row[data-suit="${suit.suitName}"]`
+    let suitCell = document.querySelector(suitSelector)
+    suitCell.textContent = suit.suitDescription
+  })
+
+
+}
 
 function renderMatrixData(data) {
-  let valueNamesRow = '<td></td>';
-  let valueDescriptionsRow = '<td></td>';
-  let combinedRow = '';
+    data.forEach(card => {
+      let cellselector = `.grid-item[data-value="${card.value}"][data-suit="${card.suit}"]`
+      let cell = document.querySelector(cellselector)
+      // Populate person
+      let personDiv = cell.querySelector('.card-person');
+      personDiv.textContent = card.person;
 
-console.log(data[0].cards)
-console.log(data[0].cards[0].suit)
-if (data.length >= 0) {
+      // Set image
+      let img = cell.querySelector('.card-image');
+      img.src = card.image;
+      img.alt = `${card.person} - ${card.action} - ${card.object}`;
 
-    data[0].suits.forEach((suit) => {
-      combinedRow += `<tr><td>${suit.suitName} <br> ${suit.suitDescription}</td>`;
-      data[0].cards.forEach((card) => {
-        if (card.suit == suit.suitName){
-          combinedRow += `<td><img src="${card.image}" style="width: 60px"/> <br> Person: ${card.person} <br> ${card.action} <br> ${card.object}</td>`;
-        }
-      });
-      combinedRow += `</tr>`;
-    })    
-  
+      // Populate action
+      let actionDiv = cell.querySelector('.card-action');
+      actionDiv.textContent = card.action;
 
-
-    data[0].values.forEach((value) => {
-      valueNamesRow += `<td>${value.valueName}</td>`;
-      valueDescriptionsRow += `<td>${value.valueDescription}</td>`;
+      // Populate object
+      let objectDiv = cell.querySelector('.card-object');
+      objectDiv.textContent = card.object;
     });
-  }
 
-  // Wrap headers and rows in respective table row tags
- 
-  let tableValueNames = `<tr>${valueNamesRow}</tr>`;
-  let tableValueDescriptions = `<tr>${valueDescriptionsRow}</tr>`;
- 
-  // Combine all rows and set them as innerHTML of the table body
-  document.querySelector("#matrix-tbl-body").innerHTML = sanitizeStringWithTableRows(tableValueNames + tableValueDescriptions + combinedRow);
 }

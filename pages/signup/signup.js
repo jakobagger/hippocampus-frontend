@@ -1,6 +1,5 @@
 import { handleHttpErrors, sanitizeStringWithTableRows } from "../../utils.js";
-
-let URL = "http://localhost:8080/api/members"
+import { API_URL } from "../../settings.js";
 
 
 export async function initSignup() {
@@ -36,7 +35,7 @@ async function signup(event) {
     };
 
     try {
-        const response = await fetch(URL, options).then(res => handleHttpErrors(res));
+        const response = await fetch(API_URL+"/members", options).then(res => handleHttpErrors(res));
         const jsonData = await response.json();
         console.log("Received data:", jsonData);
         responseStatus.innerText = JSON.stringify(jsonData);
