@@ -325,7 +325,7 @@ function handleShortCuts (evt) {
         document.getElementById("show-card-btn").click();
     }
     if (evt.altKey && evt.code === 'KeyP'){
-        document.getElementById("person").focus();
+        document.getElementById("name").focus();
     }
     if (evt.altKey && evt.code === 'KeyA'){
         document.getElementById("action").focus();
